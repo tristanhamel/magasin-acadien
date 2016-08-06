@@ -8,6 +8,7 @@ import {Landing} from './app/landing/landing.component';
 import {Auctions} from './app/auctions/auctions.component';
 import {Login} from './app/login/login.component';
 import {Signup} from './app/signup/signup.component';
+import {Legal} from './app/legal/legal.component';
 
 @Component({
   selector: 'root',
@@ -31,5 +32,6 @@ export const routes: RouterConfig = [
   {path: '', component: Landing},
   {path: 'auctions', component: Auctions},
   {path: 'login', component: Login},
-  {path: 'signup', component: Signup}
+  {path: 'signup', component: Signup},
+  {path: 'legal', component: Legal}
 ];
