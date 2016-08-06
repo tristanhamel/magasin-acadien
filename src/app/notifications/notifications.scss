@@ -1,0 +1,26 @@
+@import "../../commons.scss";
+
+.notifications {
+  .notifications-toggle {
+    cursor: pointer;
+
+    &:hover {
+      color: $brand-color;
+    }
+  }
+
+  .notifications-content {
+    position: absolute;
+    background: white;
+    border: 1px solid lightgray;
+    padding: 0.5rem;
+    border-radius: 5px;
+    top: 2.5rem;
+    z-index: 101;
+
+    ul {
+      list-style: none;
+      padding: 0;
+    }
+  }
+}

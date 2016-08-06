@@ -1,0 +1,14 @@
+<div class="notifications">
+  <button class="notifications-toggle"
+          (click)="toggleNotifications()">
+    Notifications
+  </button>
+  <div class="notifications-content"
+       *ngIf="show.content">
+    <ul>
+      <li>Notif 1</li>
+      <li>Notif 2</li>
+      <li>Notif 3</li>
+    </ul>
+  </div>
+</div>

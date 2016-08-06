@@ -8,8 +8,11 @@ import {bootstrap} from '@angular/platform-browser-dynamic';
 
 import './index.scss';
 
+// import {Header} from './app/header/header';
+// import {Footer} from './app/footer/footer';
 import {provideRouter} from '@angular/router';
 import {enableProdMode} from '@angular/core';
+
 import {routes, Root} from './routes';
 
 declare var process: any;

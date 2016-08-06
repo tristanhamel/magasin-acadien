@@ -1,0 +1,89 @@
+@import "../../commons.scss";
+
+$header-height: 50px;
+
+.header {
+  background-color: #fff;
+  color: #000;
+  height: $header-height;
+
+  a {
+    color: inherit;
+
+    &:hover {
+      color: #5aadbb;
+    }
+  }
+
+  button {
+    background: transparent;
+    border: none;
+    outline: none;
+  }
+
+  .header-container {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+
+    .header-title {
+      width: 33%;
+      font-size: 1.5rem;
+      height: $header-height;
+      line-height: $header-height;
+      padding: 0 0.5rem;
+    }
+
+    .header-notifications {
+      //width: 33%;
+    }
+
+    .header-menu-toggle {
+      //width: 33%;
+    }
+
+    .header-collapsible {
+      background: #fff;
+      display: none;
+      flex-direction: column;
+      width: 100%;
+      z-index: 100;
+
+      &.visible {
+        display: flex;
+      }
+
+      ul {
+        list-style: none;
+      }
+    }
+  }
+
+  @include breakpoint(phablet) {
+    .header-container {
+      flex-wrap: nowrap;
+
+      .header-notifications {
+        order: 3;
+      }
+
+      .header-menu-toggle {
+          display: none;
+      }
+
+      .header-collapsible {
+        display: inline-block;
+
+        ul {
+          display: flex;
+          flex-direction: row;
+          justify-content: space-around;
+        }
+      }
+    }
+  }
+}
