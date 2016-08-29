@@ -3,7 +3,7 @@
 import 'reflect-metadata';
 import 'zone.js/dist/zone';
 import 'zone.js/dist/async-test';
-import {Footer} from './footer';
+import {Footer} from './footer.component';
 import {inject, async, TestComponentBuilder, ComponentFixture} from '@angular/core/testing';
 
 describe('footer component', () => {

@@ -1,0 +1,69 @@
+{
+  "data": [
+    {
+    "_id": "1",
+    "bids": [
+      {
+        "user_id": "234",
+        "value": "0.6",
+        "time": 1472312953,
+        "message": "I really want it!"
+      }
+    ],
+    "created": 1472312753,
+    "currentPrice": 3.6,
+    "deadline": 1473033600,
+    "description": "A great product for you!",
+    "images": "",
+    "name": "Product 1",
+    "owner": {
+        "_id": "123",
+        "first_name": "Tristan",
+        "last_name": "Hamel"
+    },
+    "startPrice": 3,
+    "updated": 1472312953
+    },
+    {
+    "_id": "2",
+    "bids": [
+      {
+        "user_id": "234",
+        "value": "0.1",
+        "time": 1472316953,
+        "message": "For sake of it!"
+      }
+    ],
+    "created": 1472313753,
+    "currentPrice": 2.1,
+    "deadline": 1473035600,
+    "description": "Another product for you!",
+    "images": "",
+    "name": "Product 2",
+    "owner": {
+        "_id": "123",
+        "first_name": "Tristan",
+        "last_name": "Hamel"
+    },
+    "startPrice": 2,
+    "updated": 1472316953
+    },
+    {
+    "_id": "3",
+    "bids": [],
+    "created": 1472319753,
+    "currentPrice": 2.1,
+    "deadline": 1473035600,
+    "description": "An unpopular product so far.",
+    "images": "",
+    "name": "Product 3",
+    "owner": {
+        "_id": "123",
+        "first_name": "Tristan",
+        "last_name": "Hamel"
+    },
+    "startPrice": 10,
+    "updated": 1472319753
+    }
+  ]
+}

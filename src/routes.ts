@@ -1,28 +1,44 @@
 /// <reference path="../typings/index.d.ts"/>
 
 import {Component} from '@angular/core';
+
 import {ROUTER_DIRECTIVES, RouterConfig} from '@angular/router';
-import {Header} from './app/header/header.component';
-import {Footer} from './app/footer/footer.component';
-import {Landing} from './app/landing/landing.component';
-import {Auctions} from './app/auctions/auctions.component';
-import {Login} from './app/login/login.component';
-import {Signup} from './app/signup/signup.component';
-import {Legal} from './app/legal/legal.component';
-import {Product} from './app/product/product.component';
+
+// components
+import {Header} from './app/components/header/header.component';
+import {Footer} from './app/components/footer/footer.component';
+
+// views
+import {Landing} from './app/sections/landing/landing.component';
+import {Auctions} from './app/sections/auctions/auctions.component';
+import {Login} from './app/sections/login/login.component';
+import {Signup} from './app/sections/signup/signup.component';
+import {Legal} from './app/sections/legal/legal.component';
+import {ProductView} from './app/sections/product-view/product-view.component';
+
+// global services
+import {HTTP_PROVIDERS} from '@angular/http';
+import {ProductsService} from './app/services/products.service';
+
 
 @Component({
   selector: 'root',
   template:
 `<div class="main-container">
   <header></header>
-  <router-outlet></router-outlet>
+  <div class="main-content">
+    <router-outlet></router-outlet>
+  </div>
   <Footer></Footer>
 </div>`,
   directives: [
     ROUTER_DIRECTIVES,
     Header,
     Footer
+   ],
+   providers: [
+     ProductsService,
+     HTTP_PROVIDERS
    ]
 })
 
@@ -35,5 +51,5 @@ export const routes: RouterConfig = [
   {path: 'login', component: Login},
   {path: 'signup', component: Signup},
   {path: 'legal', component: Legal},
-  {path: 'product/:product_id', component: Product}
+  {path: 'product/:product_id', component: ProductView}
 ];

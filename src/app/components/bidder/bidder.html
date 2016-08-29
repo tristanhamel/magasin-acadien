@@ -1,0 +1,18 @@
+<form #f="ngForm"
+      (ngSubmit)="onSubmit(f.value)">
+  <button class="bid-value-button"
+          (click)="decreaseBid()">
+    -
+  </button>
+  <button class="bid-value-button"
+          (click)="increaseBid()">
+    +
+  </button>
+  <input type="text"
+         id="bidInput"
+         name="bid"
+         ngModel="bidValue">
+  <button type="submit">
+    Place bid {{bidValue}} €
+  </button>
+</form>

@@ -1,0 +1,12 @@
+<h1 class="products-view-title">
+  Great products on sale
+</h1>
+<div class="products-container">
+  <product *ngFor="let product of products"
+           [data]="product">
+  </product>
+</div>
+<div class="counter-container">
+  <product-counter>
+  </product-counter>
+</div>

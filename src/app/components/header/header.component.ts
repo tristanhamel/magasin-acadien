@@ -14,11 +14,17 @@ import './header.scss';
 })
 
 export class Header {
-  show = {
-    collapsible: false
+  show: {
+    collapsible: boolean
   };
 
-   toggleMenu() {
+  constructor() {
+    this.show = {
+      collapsible : false
+    };
+  }
+
+  toggleMenu() {
     this.show.collapsible = !this.show.collapsible;
   }
 }

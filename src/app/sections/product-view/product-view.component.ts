@@ -1,17 +1,19 @@
 import {Component} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
 
-import './product.scss';
+import './product-view.scss';
 
 @Component({
-  selector: 'Product',
-  template: require('./product.html')
+  selector: 'product-view',
+  template: require('./product-view.html')
 })
 
-export class Product {
-  product_id: Number;
+export class ProductView {
+  product_id: string;
 
   constructor(private route: ActivatedRoute) {
     route.params.subscribe(params => { this.product_id = params['product_id']; });
+
+    // TODO: bind to products service to grab the product with id product_id
   }
 }

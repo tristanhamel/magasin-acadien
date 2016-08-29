@@ -1,0 +1,24 @@
+<h2 class="product-title">
+  {{data?.name}}
+</h2>
+<div class="product-price-container">
+  <p class="product-price">
+    {{data?.currentPrice}}
+  </p>
+  <p classs="product-bids">
+    {{data?.bids.length}} bids
+  </p>
+</div>
+<div class="product-times">
+<!--   <time-counter [deadline]="data.deadline">
+  </time-counter> -->
+</div>
+<img src="{{data.images[0]}}" alt="{{data.name}} illustration">
+<!-- <bidder [product]="data"
+        (onBidding)="onbidding($bidValue)">
+</bidder> -->
+<div *ngIf="extended">
+  <p class="product-description">
+    {{data?.description}}
+  </p>
+</div>

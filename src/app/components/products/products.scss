@@ -1,0 +1,29 @@
+@import "../../../commons.scss";
+
+.products-component {
+  .products-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+  }
+
+  // properties specific to the products-view
+  .product-component {
+    border: 1px solid lightgray;
+    margin-bottom: 1rem;
+    padding: 1rem;
+
+    h2 {
+      margin-top: 0;
+    }
+
+    @include breakpoint(mobileonly) {
+      width: 100%;
+    }
+
+    @include breakpoint(phablet) {
+      width: 13rem;
+      margin: 0.5rem;
+    }
+  }
+}

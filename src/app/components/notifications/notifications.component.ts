@@ -12,7 +12,8 @@ export class Notifications {
     content: false
   };
 
-  toggleNotifications() {
+  toggleNotifications(): boolean {
     this.show.content = !this.show.content;
+    return false;
   }
 }

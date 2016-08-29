@@ -5,13 +5,11 @@ import 'reflect-metadata';
 import 'zone.js/dist/zone';
 
 import {bootstrap} from '@angular/platform-browser-dynamic';
-
-import './index.scss';
-
-// import {Header} from './app/header/header';
-// import {Footer} from './app/footer/footer';
+import {FORM_PROVIDERS} from '@angular/common';
 import {provideRouter} from '@angular/router';
 import {enableProdMode} from '@angular/core';
+
+import './index.scss';
 
 import {routes, Root} from './routes';
 
@@ -21,5 +19,6 @@ if (process.env.NODE_ENV === 'production') {
 }
 
 bootstrap(Root, [
-  provideRouter(routes)
+  provideRouter(routes),
+  FORM_PROVIDERS
 ]);
