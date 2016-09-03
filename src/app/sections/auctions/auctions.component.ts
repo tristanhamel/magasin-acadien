@@ -1,5 +1,4 @@
 import {Component} from '@angular/core';
-import {ProductsComponent} from '../../components/products/products.component';
 
 import './auctions.scss';
 
@@ -8,10 +7,7 @@ import './auctions.scss';
     class: 'auctions-component'
   },
   selector: 'auctions',
-  template: require('./auctions.html'),
-  directives: [
-    ProductsComponent
-  ]
+  template: require('./auctions.html')
 })
 
 export class Auctions {}

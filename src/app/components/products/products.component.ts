@@ -2,8 +2,6 @@ import {Component, OnInit} from '@angular/core';
 import 'rxjs/Rx';
 
 import {Product} from '../../models';
-import {ProductComponent} from '../product/product.component';
-import {ProductCounter} from '../product-counter/product-counter.component';
 import {ProductsService} from '../../services/products.service';
 
 import './products.scss';
@@ -15,11 +13,7 @@ import './products.scss';
   selector: 'products',
   template: require('./products.html'),
   inputs: [
-    'showMore'],
-  directives: [
-    ProductComponent,
-    ProductCounter
-  ]
+    'showMore']
 })
 
 export class ProductsComponent implements OnInit {

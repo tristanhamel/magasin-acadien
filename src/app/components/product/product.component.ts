@@ -1,7 +1,5 @@
 import {Component} from '@angular/core';
 import {Product} from '../../models';
-import {TimeCounter} from '../time-counter/time-counter.component';
-import {Bidder} from '../bidder/bidder.component';
 
 import './product.scss';
 
@@ -14,10 +12,6 @@ import './product.scss';
   inputs: [
     'data',
     'extended'
-   ],
-  directives: [
-    TimeCounter,
-    Bidder
   ]
 })
 
