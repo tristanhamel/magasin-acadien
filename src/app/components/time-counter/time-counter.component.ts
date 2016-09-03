@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import {Component, OnChanges} from '@angular/core';
 
 import './time-counter.scss';
 
@@ -13,25 +13,35 @@ import './time-counter.scss';
    ],
 })
 
-export class TimeCounter {
-  time: Number;
+export class TimeCounter implements OnChanges {
+//   time: number;
   timeLeft: string;
-  deadline: Date;
+//  deadline: Date;
   seconds: number;
   minutes: number;
   hours: number;
 
-  constructor() {
-    console.log(this.deadline);
-    const time = Date.now() - this.deadline.getTime();
+  ngOnChanges(changes: any) {
+    var deadline: number = changes.deadline.currentValue;
+    if (deadline) {
+      this.parseTime(deadline);
+    }
+  }
+
+  parseTime(deadline: number) {
+    const time = (deadline * 1000) - Date.now();
 
     if (time > 1000 * 60 * 60 * 48) {
+      // there are more than 2 days left
       this.timeLeft = (Math.floor(time / (1000 * 60 * 60))) + ' days left';
     } else if (time > 1000 * 60 * 60 * 24) {
-      this.timeLeft = (Math.floor(time / (1000 * 60 * 60 * 24))) + ' hours left';
+      // there is between 48 and 24 hours left
+      this.timeLeft = (Math.floor(time / (1000 * 60 * 60))) + ' hours left';
     } else if (time < 0) {
+      // the deadline is passed
       this.timeLeft = 'The deadline to place bids on this product has passed.';
     } else {
+      // there is less than 24 hours left
       this.hours = Math.floor(time / (1000 * 60 * 60));
       this.minutes = (time % (1000 * 60 * 60)) / (1000 * 60);
       this.seconds = (time % (1000 * 60)) / 1000;

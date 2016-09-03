@@ -8,11 +8,14 @@
           (click)="increaseBid()">
     +
   </button>
-  <input type="text"
+  <input type="number"
          id="bidInput"
+         min="minBid"
+         step="0.1"
+         value="bidValue"
          name="bid"
          ngModel="bidValue">
   <button type="submit">
-    Place bid {{bidValue}} €
+    Place bid!
   </button>
 </form>

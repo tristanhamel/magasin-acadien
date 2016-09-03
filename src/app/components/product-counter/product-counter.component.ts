@@ -1,4 +1,4 @@
-import {Component, EventEmitter} from '@angular/core';
+import {Component, Output, OnChanges, EventEmitter} from '@angular/core';
 import {Product} from '../../models';
 
 import './product-counter.scss';
@@ -9,20 +9,21 @@ import './product-counter.scss';
   },
   selector: 'product-counter',
   template: require('./product-counter.html'),
-  inputs: ['products'],
-  outputs: ['moreProducts']
+  inputs: ['products']
 })
 
-export class ProductCounter {
-  products: Product[];
-  moreProducts: EventEmitter<any>;
+export class ProductCounter implements OnChanges {
+  @Output() moreProducts: EventEmitter<any> = new EventEmitter();
+  productsCount: Number = 0;
 
-  constructor() {
-    this.products = [];
-    this.moreProducts = new EventEmitter();
+  ngOnChanges(changes: any): void {
+     var productsChange: Product[] = changes.products.currentValue;
+      if (productsChange) {
+        this.productsCount = productsChange.length;
+      }
   }
 
   showMore(): void {
-    this.moreProducts.emit('showMore');
+    this.moreProducts.emit({currentCount: this.productsCount});
   }
 }

@@ -1,8 +1,9 @@
 import {Component, OnInit} from '@angular/core';
-import {Product} from '../../models';
-import {ProductComponent} from '../product/product.component';
 import 'rxjs/Rx';
 
+import {Product} from '../../models';
+import {ProductComponent} from '../product/product.component';
+import {ProductCounter} from '../product-counter/product-counter.component';
 import {ProductsService} from '../../services/products.service';
 
 import './products.scss';
@@ -13,8 +14,12 @@ import './products.scss';
   },
   selector: 'products',
   template: require('./products.html'),
-  inputs: [],
-  directives: [ProductComponent]
+  inputs: [
+    'showMore'],
+  directives: [
+    ProductComponent,
+    ProductCounter
+  ]
 })
 
 export class ProductsComponent implements OnInit {
@@ -31,5 +36,9 @@ export class ProductsComponent implements OnInit {
         result => this.products = result,
         error => console.log(error)
       );
+  }
+
+  getMoreProducts(e: any) {
+    console.log(e);
   }
 }

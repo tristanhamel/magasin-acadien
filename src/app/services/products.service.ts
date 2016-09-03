@@ -7,9 +7,9 @@ import 'rxjs/Rx';
 
 @Injectable()
 export class ProductsService {
-  constructor(private http: Http) {}
-
   productsUrl = 'mocks/products.json';
+
+  constructor(private http: Http) {}
 
   getProducts (): Observable<Product[]> {
     return this.http.get(this.productsUrl)

@@ -1,4 +1,4 @@
-import {Component, EventEmitter} from '@angular/core';
+import {Component, OnChanges, Output, EventEmitter} from '@angular/core';
 import {Product} from '../../models';
 
 import './bidder.scss';
@@ -9,42 +9,53 @@ import './bidder.scss';
   },
   selector: 'bidder',
   template: require('./bidder.html'),
-  inputs: ['product'],
-   outputs: ['onBidding']
+  inputs: ['product']
 })
 
-export class Bidder {
+export class Bidder implements OnChanges {
   bidValue: number;
   minBid : number;
-  product: Product;
-  onBidding: EventEmitter<number>;
+  currentPrice: number;
+  @Output() onBidding: EventEmitter<any> = new EventEmitter();
 
-  constructor() {
-    if (this.product.currentPrice < 3) {
-      this.minBid = 0.1;
-    } else if (this.product.currentPrice < 10) {
-      this.minBid = 0.2;
-    } else if (this.product.currentPrice < 20) {
-      this.minBid = 0.5;
-    } else {
-      this.minBid = 1;
+  ngOnChanges(changes: any) {
+    var prod: Product = changes.product.currentValue;
+    if (prod) {
+      this.defineMinBid(prod.currentPrice);
     }
-
-    this.onBidding = new EventEmitter<number>();
   }
 
   decreaseBid(): void {
-    if (this.bidValue - this.minBid > this.product.currentPrice) {
+    if (this.bidValue - this.minBid > this.currentPrice) {
       this.bidValue -= this.minBid;
+    }
+  }
+
+  defineMinBid(currentPrice: number) {
+    this.currentPrice = currentPrice;
+
+    if (currentPrice < 3) {
+      this.minBid = 0.1;
+      this.bidValue = 0.1;
+    } else if (currentPrice < 10) {
+      this.minBid = 0.2;
+      this.bidValue = 0.2;
+    } else if (currentPrice < 20) {
+      this.minBid = 0.5;
+      this.bidValue = 0.5;
+    } else {
+      this.minBid = 1;
+      this.bidValue = 1;
     }
   }
 
   increaseBid(): void {
     this.bidValue += this.minBid;
+    console.log(this.bidValue);
   }
 
   onSubmit(value: {bid: number}): void {
     console.log(value);
-    this.onBidding.emit(value.bid);
+    this.onBidding.emit({bid: value.bid});
   }
 }

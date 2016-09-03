@@ -3,3 +3,6 @@
            [data]="product">
   </product>
 </div>
+<product-counter [products]="products"
+                 (moreProducts)="getMoreProducts($event)">
+</product-counter>

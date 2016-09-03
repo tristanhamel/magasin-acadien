@@ -9,7 +9,9 @@ import './auctions.scss';
   },
   selector: 'auctions',
   template: require('./auctions.html'),
-  directives: [ProductsComponent]
+  directives: [
+    ProductsComponent
+  ]
 })
 
 export class Auctions {}

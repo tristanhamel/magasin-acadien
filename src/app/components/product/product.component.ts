@@ -25,12 +25,6 @@ export class ProductComponent {
   data: Product;
   extended: boolean;
 
-  constructor() {
-
-    console.log(this.data);
-  }
-
-
   onBidding(bidValue: number): void {
     // do something smart with the bid value
   }
