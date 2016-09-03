@@ -1,5 +1,7 @@
 import {Component, OnChanges, Output, EventEmitter} from '@angular/core';
-import {Product} from '../../models';
+
+import {Bid, Product} from '../../models';
+import {UserService} from '../../services/user.service';
 
 import './bidder.scss';
 
@@ -15,25 +17,20 @@ import './bidder.scss';
 export class Bidder implements OnChanges {
   bidValue: number;
   minBid : number;
-  currentPrice: number;
+  product: Product;
   @Output() onBidding: EventEmitter<any> = new EventEmitter();
+
+  constructor(private user: UserService) {}
 
   ngOnChanges(changes: any) {
     var prod: Product = changes.product.currentValue;
     if (prod) {
+      this.product = prod;
       this.defineMinBid(prod.currentPrice);
     }
   }
 
-  decreaseBid(): void {
-    if (this.bidValue - this.minBid > this.currentPrice) {
-      this.bidValue -= this.minBid;
-    }
-  }
-
   defineMinBid(currentPrice: number) {
-    this.currentPrice = currentPrice;
-
     if (currentPrice < 3) {
       this.minBid = 0.1;
       this.bidValue = 0.1;
@@ -49,13 +46,11 @@ export class Bidder implements OnChanges {
     }
   }
 
-  increaseBid(): void {
-    this.bidValue += this.minBid;
-    console.log(this.bidValue);
-  }
-
-  onSubmit(value: {bid: number}): void {
-    console.log(value);
-    this.onBidding.emit({bid: value.bid});
+  onSubmit(value: any): void {
+    const bid = new Bid;
+    bid.user = this.user.getUser();
+    bid.value = value;
+    console.log(bid);
+    this.onBidding.emit(bid);
   }
 }

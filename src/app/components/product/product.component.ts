@@ -1,5 +1,5 @@
 import {Component} from '@angular/core';
-import {Product} from '../../models';
+import {Bid, Product} from '../../models';
 
 import './product.scss';
 
@@ -19,7 +19,7 @@ export class ProductComponent {
   data: Product;
   extended: boolean;
 
-  onBidding(bidValue: number): void {
-    // do something smart with the bid value
+  bidding(bid: Bid): void {
+    console.log(bid);
   }
 }

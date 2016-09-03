@@ -11,12 +11,12 @@ body, h1, h2, h3 {
 }
 
 a {
-  color: white;
+  color: $brand-color;
   cursor: pointer;
   text-decoration: none;
 
   &:hover {
-    color: $brand-color;
+    color: $brand-color-light;
   }
 }
 

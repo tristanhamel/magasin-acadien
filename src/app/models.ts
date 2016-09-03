@@ -4,22 +4,22 @@ export class User {
   last_name: string;
   email: string;
 
-  constructor (obj?:any) {
-    this._id        = obj &&  obj._id         || null;
-    this.first_name = obj &&  obj.first_name  || null;
-    this.last_name  = obj &&  obj.last_name   || null;
-    this.email      = obj &&  obj.email       || null;
+  constructor (obj?: any) {
+    this._id        = obj &&  obj._id;
+    this.first_name = obj &&  obj.first_name;
+    this.last_name  = obj &&  obj.last_name;
+    this.email      = obj &&  obj.email || null;
   }
 }
 
 export class Bid {
-  user_id: string;
+  user: User;
   value: number;
   time: Date;
   message: string;
 
-  constructor (obj?:any) {
-    this.user_id =  obj &&  obj.user_id  || null;
+  constructor (obj?: any) {
+    this.user    =  obj &&  obj.user     || null;
     this.value   =  obj &&  obj.value    || null;
     this.time    =  obj &&  obj.time     || new Date();
     this.message =  obj &&  obj.message  || null;
@@ -39,7 +39,7 @@ export class Product {
   startPrice: number;
   updated: Date;
 
-  constructor (obj?:any) {
+  constructor (obj?: any) {
     this._id =          obj && obj._id          || null;
     this.bids =         obj && obj.bids         || [];
     this.created =      obj && obj.created      || new Date();

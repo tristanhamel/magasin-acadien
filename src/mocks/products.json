@@ -4,7 +4,11 @@
     "_id": "1",
     "bids": [
       {
-        "user_id": "234",
+        "user": {
+            "_id": "234",
+            "first_name": "Crazy",
+            "last_name": "Man"
+        },
         "value": "0.6",
         "time": 1472312953,
         "message": "I really want it!"
@@ -14,7 +18,7 @@
     "currentPrice": 3.6,
     "deadline": 1473033600,
     "description": "A great product for you!",
-    "images": "",
+    "images": "/mocks/images/product1.jpg",
     "name": "Product 1",
     "owner": {
         "_id": "123",
@@ -28,17 +32,21 @@
     "_id": "2",
     "bids": [
       {
-        "user_id": "234",
+        "user": {
+            "_id": "234",
+            "first_name": "Crazy",
+            "last_name": "Man"
+        },
         "value": "0.1",
         "time": 1472316953,
-        "message": "For sake of it!"
+        "message": ""
       }
     ],
     "created": 1472313753,
     "currentPrice": 2.1,
     "deadline": 1473035600,
     "description": "Another product for you!",
-    "images": "",
+    "images": "/mocks/images/product2.jpg",
     "name": "Product 2",
     "owner": {
         "_id": "123",
@@ -55,7 +63,7 @@
     "currentPrice": 2.1,
     "deadline": 1473035600,
     "description": "An unpopular product so far.",
-    "images": "",
+    "images": "/mocks/images/product3.jpg",
     "name": "Product 3",
     "owner": {
         "_id": "123",

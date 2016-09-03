@@ -1,6 +1,6 @@
 import { NgModule }      from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 
 // views
@@ -26,11 +26,13 @@ import { routing } from './app.routes';
 
 // global services
 import { ProductsService } from './app/services/products.service';
+import { UserService } from './app/services/user.service';
 
 @NgModule({
   imports: [                       // module dependencies
     BrowserModule,
     FormsModule,
+    ReactiveFormsModule,
     HttpModule,
     routing
   ],
@@ -53,7 +55,8 @@ import { ProductsService } from './app/services/products.service';
    ],
   bootstrap: [ AppComponent ],     // root component
   providers: [                     // services
-    ProductsService
+    ProductsService,
+    UserService
   ]
 })
 export class AppModule { }
