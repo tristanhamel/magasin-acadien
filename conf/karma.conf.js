@@ -10,6 +10,7 @@ module.exports = function (config) {
       outputDir: 'test-reports'
     },
     browsers: [
+      // TODO: replace with PhantomJs
       'Chrome'
     ],
     frameworks: [

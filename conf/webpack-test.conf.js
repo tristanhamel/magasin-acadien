@@ -27,6 +27,13 @@ module.exports = {
         loaders: [
           'html'
         ]
+      },
+      {
+      // we need to ignore style @imports in unit tests
+        test: /.scss$/,
+        loaders: [
+          'ignore-loader'
+        ]
       }
     ]
   },
