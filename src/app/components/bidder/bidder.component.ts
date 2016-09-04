@@ -47,9 +47,10 @@ export class Bidder implements OnChanges {
   }
 
   onSubmit(value: any): void {
-    const bid = new Bid;
-    bid.user = this.user.getUser();
-    bid.value = value;
+    const bid = new Bid({
+      user: this.user.getUser(),
+      value: value
+    });
     console.log(bid);
     this.onBidding.emit(bid);
   }

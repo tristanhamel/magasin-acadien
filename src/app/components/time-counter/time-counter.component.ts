@@ -14,12 +14,8 @@ import './time-counter.scss';
 })
 
 export class TimeCounter implements OnChanges {
-//   time: number;
   timeLeft: string;
-//  deadline: Date;
-  seconds: number;
-  minutes: number;
-  hours: number;
+
 
   ngOnChanges(changes: any) {
     var deadline: number = changes.deadline.currentValue;
@@ -42,30 +38,32 @@ export class TimeCounter implements OnChanges {
       this.timeLeft = 'The deadline to place bids on this product has passed.';
     } else {
       // there is less than 24 hours left
-      this.hours = Math.floor(time / (1000 * 60 * 60));
-      this.minutes = (time % (1000 * 60 * 60)) / (1000 * 60);
-      this.seconds = (time % (1000 * 60)) / 1000;
-      this.timeLeft = this.hours + ' h ' + this.minutes + ' min ' + this.seconds + ' sec left';
+      let hours = Math.floor(time / (1000 * 60 * 60));
+      let minutes = Math.floor((time % (1000 * 60 * 60)) / (1000 * 60));
+      let seconds = Math.floor((time % (1000 * 60)) / 1000);
+      this.timeLeft = hours + 'h ' + minutes + 'min ' + seconds + 's left';
 
       setInterval(
         () => {
-          if (this.seconds > 0) {
-            this.seconds -= 1 ;
+          if (seconds > 0) {
+            seconds -= 1 ;
           } else {
-            this.seconds = 59;
+            seconds = 59;
 
-            if (this.minutes > 0) {
-              this.minutes -= 1;
+            if (minutes > 0) {
+              minutes -= 1;
             } else {
-              this.minutes = 59;
+              minutes = 59;
 
-              if (this.hours > 0) {
-                this.hours -= 1;
+              if (hours > 0) {
+                hours -= 1;
               } else {
                 this.timeLeft = 'The deadline to place bids on this product has passed.';
+                return;
               }
             }
           }
+          this.timeLeft = hours + 'h ' + minutes + 'min ' + seconds + 's left';
         },
       1000);
     }
