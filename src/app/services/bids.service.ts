@@ -22,7 +22,7 @@ export class BidsService {
     response.updated = new Date();
     return new Promise((resolve, reject) => {
       setTimeout(() => {
-        this.updated.emit(response);
+        this.updated.emit([response]);
         resolve('success');
       }, 2000);
     });
