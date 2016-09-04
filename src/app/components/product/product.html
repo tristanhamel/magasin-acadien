@@ -10,6 +10,7 @@
     </div>
     <div class="bidder-container">
       <bidder [product]="product"
+              [pending]="submittedBid"
               (onBidding)="bidding($event)">
       </bidder>
     </div>

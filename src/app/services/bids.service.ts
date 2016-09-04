@@ -2,16 +2,15 @@ import {Injectable, EventEmitter} from '@angular/core';
 // import {Http, Response} from '@angular/http';
 
 import {Product} from '../models';
- import {Observable} from 'rxjs/Observable';
+// import {Observable} from 'rxjs/Observable';
  import 'rxjs/Rx';
 
 @Injectable()
 export class BidsService {
 
-  // constructor(private http: Http) {}
-  constructor() {}
-
   updated: EventEmitter<any> = new EventEmitter();
+
+  // constructor(private http: Http) {}
 
   make (product: Product): any {
     // return this.http.post(this.productsUrl)
@@ -25,7 +24,7 @@ export class BidsService {
       setTimeout(() => {
         this.updated.emit(response);
         resolve('success');
-      }, 2000)
+      }, 2000);
     });
   }
 
@@ -34,10 +33,10 @@ export class BidsService {
   //   return body.data || { };
   // }
 
-  private handleError(error: any) {
-    let errMsg = (error.message) ? error.message :
-      error.status ? `${error.status} - ${error.statusText}` : 'Server error';
-    console.error(errMsg); // log to console instead of doing sth like remote logging
-    return Observable.throw(errMsg);
-  }
+  // private handleError(error: any) {
+  //   let errMsg = (error.message) ? error.message :
+  //     error.status ? `${error.status} - ${error.statusText}` : 'Server error';
+  //   console.error(errMsg); // log to console instead of doing sth like remote logging
+  //   return Observable.throw(errMsg);
+  // }
 }

@@ -1,4 +1,4 @@
-import {Component, OnChanges, Output, EventEmitter} from '@angular/core';
+import {Component, OnChanges, Input, Output, EventEmitter} from '@angular/core';
 
 import {Bid, Product} from '../../models';
 import {UserService} from '../../services/user.service';
@@ -10,24 +10,26 @@ import './bidder.scss';
     class: 'bidder'
   },
   selector: 'bidder',
-  template: require('./bidder.html'),
-  inputs: ['product']
+  template: require('./bidder.html')
 })
 
 export class Bidder implements OnChanges {
   bidValue: number;
   minBid : number;
-  product: Product;
 
+  @Input() pending: boolean = false;
+  @Input() product: Product;
   @Output() onBidding: EventEmitter<any> = new EventEmitter();
 
   constructor(private user: UserService) {}
 
   ngOnChanges(changes: any) {
-    var prod: Product = changes.product.currentValue;
-    if (prod) {
-      this.product = prod;
-      this.defineMinBid(prod.currentPrice);
+    if (changes.product) {
+      var prod: Product = changes.product.currentValue;
+      if (prod) {
+        this.product = prod;
+        this.defineMinBid(prod.currentPrice);
+      }
     }
   }
 

@@ -18,19 +18,30 @@ import './product.scss';
 })
 
 export class ProductComponent {
-  product: Product;
   extended: boolean;
+  product: Product;
+  submittedBid: boolean = false;
 
   constructor(private bidsService: BidsService) {}
 
   bidding(bid: Bid): void {
-    // This is the way to make a deep clone in js
+    // This is one way to make a deep clone in js
     const updated = JSON.parse(JSON.stringify(this.product));
     updated.bids.push(bid);
     updated.currentPrice = (Math.round((bid.value + updated.currentPrice) * 100)) / 100;
 
+    this.submittedBid = true;
+
     this.bidsService.make(updated).then(
-      (response: any) => {console.log(response);}
-    );
+      (response: any) => {
+        console.log(response);
+        this.submittedBid = false;
+      }
+    ).catch((error: any) => {
+      // we may want to do something smarter with the error such as displaying
+      // a feedback message to the user.
+      console.log(error);
+      this.submittedBid = false;
+    });
   }
 }
