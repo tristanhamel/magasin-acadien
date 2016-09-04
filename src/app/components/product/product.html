@@ -2,31 +2,31 @@
   <div class="product-data">
     <h2 class="product-title">
       <a>
-        {{data?.name}}
+        {{product?.name}}
       </a>
     </h2>
     <div class="product-price">
-      {{data?.currentPrice}} €
+      {{product?.currentPrice}} €
     </div>
     <div class="bidder-container">
-      <bidder [product]="data"
-              (onBidding)="bidding($bid)">
+      <bidder [product]="product"
+              (onBidding)="bidding($event)">
       </bidder>
     </div>
     <div class="product-bids">
-      {{data?.bids.length}} bids
+      {{product?.bids.length}} bids
     </div>
     <div class="product-deadline">
-      <time-counter [deadline]="data.deadline">
+      <time-counter [deadline]="product.deadline">
       </time-counter>
     </div>
   </div>
-  <img src="{{data.images}}"
-       alt="{{data.name}} illustration"
+  <img src="{{product.images}}"
+       alt="{{product.name}} illustration"
        class="product-image">
   <div *ngIf="extended">
     <div class="product-description">
-      {{data?.description}}
+      {{product?.description}}
     </div>
   </div>
 </div>

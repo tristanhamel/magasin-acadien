@@ -25,6 +25,7 @@ import { TimeCounter } from './app/components/time-counter/time-counter.componen
 import { routing } from './app.routes';
 
 // global services
+import { BidsService } from './app/services/bids.service';
 import { ProductsService } from './app/services/products.service';
 import { UserService } from './app/services/user.service';
 
@@ -55,6 +56,7 @@ import { UserService } from './app/services/user.service';
    ],
   bootstrap: [ AppComponent ],     // root component
   providers: [                     // services
+    BidsService,
     ProductsService,
     UserService
   ]

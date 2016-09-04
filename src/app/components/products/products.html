@@ -1,7 +1,7 @@
 <div class="products-container"
      [ngClass]="layout">
   <product *ngFor="let product of products"
-           [data]="product">
+           [init]="product">
   </product>
 </div>
 <product-counter *ngIf="showMore"

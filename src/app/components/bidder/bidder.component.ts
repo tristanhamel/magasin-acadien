@@ -18,6 +18,7 @@ export class Bidder implements OnChanges {
   bidValue: number;
   minBid : number;
   product: Product;
+
   @Output() onBidding: EventEmitter<any> = new EventEmitter();
 
   constructor(private user: UserService) {}
@@ -51,7 +52,6 @@ export class Bidder implements OnChanges {
       user: this.user.getUser(),
       value: value
     });
-    console.log(bid);
     this.onBidding.emit(bid);
   }
 }

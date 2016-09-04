@@ -9,7 +9,7 @@
             "first_name": "Crazy",
             "last_name": "Man"
         },
-        "value": "0.6",
+        "value": 0.6,
         "time": 1472312953,
         "message": "I really want it!"
       }
@@ -37,7 +37,7 @@
             "first_name": "Crazy",
             "last_name": "Man"
         },
-        "value": "0.1",
+        "value": 0.1,
         "time": 1472316953,
         "message": ""
       }
