@@ -5,25 +5,28 @@
     display: flex;
     flex-wrap: wrap;
     justify-content: space-around;
-  }
 
-  // properties specific to the products-view
-  .product-component {
-    border: 1px solid lightgray;
-    margin-bottom: 1rem;
-    padding: 1rem;
+    // thumbnail layout
+    &.thumbnail {
+      border-width: 2rem;
+      .product-component {
 
-    h2 {
-      margin-top: 0;
+        @include breakpoint(mobileonly) {
+          width: 100%;
+        }
+
+        @include breakpoint(phablet) {
+          width: 13rem;
+          margin: 0.5rem;
+        }
+      }
     }
 
-    @include breakpoint(mobileonly) {
-      width: 100%;
-    }
-
-    @include breakpoint(phablet) {
-      width: 13rem;
-      margin: 0.5rem;
+    // list layout
+    &.list {
+      .product-component {
+        width: 100%;
+      }
     }
   }
 }

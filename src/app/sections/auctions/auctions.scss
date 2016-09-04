@@ -1,0 +1,10 @@
+@import "../../../commons.scss";
+
+.auctions-component {
+  display: block;
+  padding: 0 0.2rem;
+
+  @include breakpoint(phablet) {
+    padding: 0 1rem;
+  }
+}

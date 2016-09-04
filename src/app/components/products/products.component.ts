@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import 'rxjs/Rx';
 
 import {Product} from '../../models';
@@ -13,12 +13,15 @@ import './products.scss';
   selector: 'products',
   template: require('./products.html'),
   inputs: [
-    'showMore']
+    'showMore'
+  ]
 })
 
 export class ProductsComponent implements OnInit {
 
-  public products: Product[];
+  products: Product[];
+
+  @Input() layout: string = 'thumbnail';
 
   constructor(private productsService: ProductsService) {}
 

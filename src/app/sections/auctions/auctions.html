@@ -1,5 +1,25 @@
 <h1>
   Great products on sale
 </h1>
-<products [showMore]="true">
+<div class="auction-filters">
+  Layout:
+  <form>
+    <label>
+      Thumbnail
+    </label>
+    <input type="radio"
+           name="layout"
+           value="thumbnail"
+           [(ngModel)]="filters.layout">
+    <label>
+      List
+    </label>
+    <input type="radio"
+           name="layout"
+           value="list"
+           [(ngModel)]="filters.layout">
+  </form>
+</div>
+<products [showMore]="true"
+          [layout]="filters.layout">
 </products>

@@ -1,41 +1,90 @@
 @import "../../../commons.scss";
 
 .product-component {
-  display: flex;
-  flex-wrap: wrap;
+  background: #fff;
+  border: 1px solid lightgray;
 
-  div {
-    padding: 0.1rem 0;
-  }
-
-  .product-title {
-    margin-bottom: 0.2rem;
-    width: 100%;
-  }
-
-  .product-price {
-    width: 30%;
-  }
-
-  .bidder-container {
-    width: 70%;
-  }
-
-  .product-bids {
-    font-size: $font-size-small;
-    width: 30%;
-  }
-
-  .product-deadline {
+  .product-container {
     display: flex;
-    font-size: $font-size-small;
-    justify-content: flex-end;
-    width: 70%;
-  }
 
-  .product-image {
-    border: 1px solid $gray-lighter;
-    width: 100%;
-    height: 100%;
+    .product-data {
+      display: flex;
+      flex-wrap: wrap;
+
+      h2 {
+        margin-top: 0;
+      }
+
+      div {
+        padding: 0.1rem 0;
+      }
+
+      .product-title {
+        margin-bottom: 0.2rem;
+        width: 100%;
+      }
+
+      .product-price, .product-bids {
+        width: 30%;
+      }
+
+      .bidder-container, .product-deadline {
+        width: 70%;
+      }
+
+      .product-image {
+        height: 100%;
+        width: 100%;
+      }
+
+      .product-bids {
+        font-size: $font-size-small;
+      }
+
+      .product-deadline {
+        display: flex;
+        font-size: $font-size-small;
+        justify-content: flex-end;
+      }
+    }
+
+    .product-image {
+      border: 1px solid $gray-lighter;
+    }
+  }
+}
+
+// thumbnail-style layout (default)
+.thumbnail .product-component {
+  margin-bottom: 1rem;
+  padding: 1rem;
+
+  .product-container {
+    flex-wrap: wrap;
+
+    .product-image {
+      height: 100%;
+      width: 100%;
+    }
+  }
+}
+
+// list-style layout
+.list .product-component {
+  margin-bottom: -1px;
+  padding: 0.2rem;
+
+  .product-container {
+    flex-wrap: nowrap;
+
+    .product-data {
+      margin-left: 1rem;
+      order: 2;
+    }
+
+    .product-image {
+      height: 5rem;
+      order: 1;
+    }
   }
 }

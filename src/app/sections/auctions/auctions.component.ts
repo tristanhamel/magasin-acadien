@@ -10,4 +10,6 @@ import './auctions.scss';
   template: require('./auctions.html')
 })
 
-export class Auctions {}
+export class Auctions {
+  filters: {layout: string} = {layout: 'thumbnail'};
+}

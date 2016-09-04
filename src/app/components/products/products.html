@@ -1,8 +1,10 @@
-<div class="products-container">
+<div class="products-container"
+     [ngClass]="layout">
   <product *ngFor="let product of products"
            [data]="product">
   </product>
 </div>
-<product-counter [products]="products"
+<product-counter *ngIf="showMore"
+                 [products]="products"
                  (moreProducts)="getMoreProducts($event)">
 </product-counter>

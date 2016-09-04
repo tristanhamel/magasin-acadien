@@ -1,28 +1,32 @@
-<h2 class="product-title">
-  <a>
-    {{data?.name}}
-  </a>
-</h2>
-<div class="product-price">
-  {{data?.currentPrice}} €
-</div>
-<div class="bidder-container">
-  <bidder [product]="data"
-          (onBidding)="bidding($bid)">
-  </bidder>
-</div>
-<div class="product-bids">
-  {{data?.bids.length}} bids
-</div>
-<div class="product-deadline">
-  <time-counter [deadline]="data.deadline">
-  </time-counter>
-</div>
-<img src="{{data.images}}"
-     alt="{{data.name}} illustration"
-     class="product-image">
-<div *ngIf="extended">
-  <div class="product-description">
-    {{data?.description}}
+<div class="product-container">
+  <div class="product-data">
+    <h2 class="product-title">
+      <a>
+        {{data?.name}}
+      </a>
+    </h2>
+    <div class="product-price">
+      {{data?.currentPrice}} €
+    </div>
+    <div class="bidder-container">
+      <bidder [product]="data"
+              (onBidding)="bidding($bid)">
+      </bidder>
+    </div>
+    <div class="product-bids">
+      {{data?.bids.length}} bids
+    </div>
+    <div class="product-deadline">
+      <time-counter [deadline]="data.deadline">
+      </time-counter>
+    </div>
+  </div>
+  <img src="{{data.images}}"
+       alt="{{data.name}} illustration"
+       class="product-image">
+  <div *ngIf="extended">
+    <div class="product-description">
+      {{data?.description}}
+    </div>
   </div>
 </div>
