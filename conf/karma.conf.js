@@ -19,6 +19,7 @@ module.exports = function (config) {
     files: [
       'node_modules/es6-shim/es6-shim.js',
       conf.path.src('index.spec.js')
+      // {pattern: './conf/karma-test-shim.js', watched: false}
     ],
     preprocessors: {
       [conf.path.src('index.spec.js')]: [

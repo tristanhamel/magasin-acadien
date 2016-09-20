@@ -34,7 +34,7 @@ export class ProductsService {
           this.products = prods;            // init store
           return prods;
         }
-        const ids = this.products.map((obj) => obj._id)
+        const ids = this.products.map((obj) => obj._id);
         prods.map((prod: any) => {
           if (ids.indexOf(prod._id) < 0) {
             this.products.push(prod);

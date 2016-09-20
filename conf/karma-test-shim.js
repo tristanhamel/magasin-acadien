@@ -1,9 +1,3 @@
-/// <reference path="../../typings/index.d.ts"/>
-
-// require('reflect-metadata');
-// const context = require.context('./app', true, /\.(js|ts|tsx)$/);
-// context.keys().forEach(context);
-
 Error.stackTraceLimit = Infinity;
 
 require('core-js/es6');

@@ -1,12 +1,10 @@
-// /// <reference path="../../typings/index.d.ts"/>
+// // /// <reference path="../../typings/index.d.ts"/>
 
-// import 'zone.js/dist/zone';
-// import 'zone.js/dist/async-test';
-// import {Header} from './header';
-// import {inject, async, TestComponentBuilder, ComponentFixture} from '@angular/core/testing';
+// import {Header} from './header.component';
+// import {inject, async, TestBed, ComponentFixture} from '@angular/core/testing';
 
 // describe('header component', () => {
-//   it('should render \'Fountain Generator\'', async(inject([TestComponentBuilder], (tcb: TestComponentBuilder) => {
+//   it('should render \'Fountain Generator\'', async(inject([TestBed], (tcb: TestBed) => {
 //     tcb.createAsync(Header)
 //       .then((fixture: ComponentFixture<any>) => {
 //         fixture.detectChanges();
