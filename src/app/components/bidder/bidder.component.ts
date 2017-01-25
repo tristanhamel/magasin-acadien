@@ -1,6 +1,6 @@
-import {Component, OnChanges, Input, Output, EventEmitter} from '@angular/core';
+import {Component, OnChanges, OnInit, Input, Output, EventEmitter} from '@angular/core';
 
-import {Bid, Product} from '../../models';
+import {Bid, Product, User} from '../../models';
 import {UserService} from '../../services/user.service';
 
 import './bidder.scss';
@@ -13,15 +13,23 @@ import './bidder.scss';
   template: require('./bidder.html')
 })
 
-export class Bidder implements OnChanges {
+export class Bidder implements OnChanges, OnInit {
   bidValue: number;
   minBid : number;
+  user: User;
 
   @Input() pending: boolean = false;
   @Input() product: Product;
   @Output() onBidding: EventEmitter<any> = new EventEmitter();
 
-  constructor(private user: UserService) {}
+  constructor(private userService: UserService) {}
+
+  ngOnInit() {
+    this.userService.currentUser
+      .subscribe( (user: User) => {
+        this.user = user;
+      });
+  }
 
   ngOnChanges(changes: any) {
     if (changes.product) {
@@ -51,7 +59,7 @@ export class Bidder implements OnChanges {
 
   onSubmit(value: any): void {
     const bid = new Bid({
-      user: this.user.getUser(),
+      user: this.user,
       value: value
     });
     this.onBidding.emit(bid);

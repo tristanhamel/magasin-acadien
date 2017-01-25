@@ -5,40 +5,28 @@
         Shop
       </a>
     </li>
-    <li class="header-notifications">
-      <notifications>
-      </notifications>
-    </li>
-    <li class="header-menu-toggle">
-      <button (click)="toggleMenu()">
-        Menu
-      </button>
-    </li>
-    <li class="header-collapsible"
-        [ngClass]="{visible: show.collapsible}">
-      <ul>
-        <li class="header-auctions">
-          <a routerLink="/auctions">
-            Auctions
-          </a>
-        </li>
-        <li class="header-separator"></li>
-        <li class="header-signup">
-          <a routerLink="/signup">
-            Sign up
-          </a>
-        </li>
-        <li class="header-login">
-          <a routerLink="/login">
-            Log in
-          </a>
-        </li>
-        <li class="header-logout">
-          <a routerLink="">
-            Log out
-          </a>
-        </li>
-      </ul>
+    <!--<li class="header-notifications">-->
+      <!--<notifications>-->
+      <!--</notifications>-->
+    <!--</li>-->
+    <!--<li class="header-menu-toggle">-->
+      <!--<button (click)="toggleMenu()">-->
+        <!--Menu-->
+      <!--</button>-->
+    <!--</li>-->
+    <!--<li class="header-collapsible"-->
+        <!--[ngClass]="{visible: show.collapsible}">-->
+      <!--<ul>-->
+        <!--<li class="header-auctions">-->
+          <!--<a routerLink="/auctions">-->
+            <!--Auctions-->
+          <!--</a>-->
+        <!--</li>-->
+        <!--<li class="header-separator"></li>-->
+      <!--</ul>-->
+    <!--</li>-->
+    <li>
+      <user-menu></user-menu>
     </li>
   </ul>
 </div>

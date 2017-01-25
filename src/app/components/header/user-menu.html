@@ -1,0 +1,41 @@
+<div class="user-menu-overlay"
+     (click)="toggleMenu()"
+     [ngClass]="{visible: show}">
+</div>
+<div class="user-menu">
+  <div class="user-menu-toggle"
+       (click)="toggleMenu()">
+    USER
+  </div>
+  <div class="user-menu-content"
+       [ngClass]="{visible: show}">
+    <ul *ngIf="!currentUser">
+      <li>
+        <a (click)="toggleLogin()">
+          Log in
+        </a>
+        <login *ngIf="showLogin"
+               (onLogin)="onLogin($event)"></login>
+      </li>
+      <li>
+        <a (click)="toggleSignup()">
+          Sign up
+        </a>
+        <signup *ngIf="showSignup">
+        </signup>
+      </li>
+    </ul>
+    <ul *ngIf="currentUser">
+      <li>
+        <a routerLink="/my-bids">
+          My bids
+        </a>
+      </li>
+      <li>
+        <a (click)="logout()">
+          Logout
+        </a>
+      </li>
+    </ul>
+  </div>
+</div>

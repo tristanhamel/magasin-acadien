@@ -1,14 +1,14 @@
 export class User {
   _id: string;
-  first_name: string;
-  last_name: string;
+  name: string;
+  role: string;
   email: string;
 
   constructor (obj?: any) {
     this._id        = obj &&  obj._id;
-    this.first_name = obj &&  obj.first_name;
-    this.last_name  = obj &&  obj.last_name;
-    this.email      = obj &&  obj.email || null;
+    this.name       = obj &&  obj.name;
+    this.role       = obj && obj.role;
+    this.email      = obj &&  obj.email;
   }
 }
 

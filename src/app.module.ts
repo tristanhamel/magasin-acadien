@@ -6,16 +6,17 @@ import { HttpModule } from '@angular/http';
 // views
 import {Landing} from './app/sections/landing/landing.component';
 import {Auctions} from './app/sections/auctions/auctions.component';
-import {Login} from './app/sections/login/login.component';
-import {Signup} from './app/sections/signup/signup.component';
+import {Signup} from './app/components/header/signup/signup.component';
 import {Legal} from './app/sections/legal/legal.component';
 import {ProductView} from './app/sections/product-view/product-view.component';
 
 // global components
 import { Header } from './app/components/header/header.component';
+import { UserMenu } from './app/components/header/user-menu.component';
+import { Login } from './app/components/header/login/login.component';
 import { Footer } from './app/components/footer/footer.component';
 import { AppComponent }  from './app.component';
-import { Notifications } from './app/components/notifications/notifications.component.ts';
+import { Notifications } from './app/components/notifications/notifications.component';
 import { Bidder } from './app/components/bidder/bidder.component';
 import { ProductComponent } from './app/components/product/product.component';
 import { ProductsComponent } from './app/components/products/products.component';
@@ -25,9 +26,12 @@ import { TimeCounter } from './app/components/time-counter/time-counter.componen
 import { routing } from './app.routes';
 
 // global services
-import { BidsService } from './app/services/bids.service';
-import { ProductsService } from './app/services/products.service';
-import { UserService } from './app/services/user.service';
+import {
+  BidsService,
+  ProductsService,
+  UserService,
+  Authenticate
+} from './app/services/services';
 
 @NgModule({
   imports: [                       // module dependencies
@@ -40,11 +44,12 @@ import { UserService } from './app/services/user.service';
   declarations: [                  // components and directives
     Landing,
     Auctions,
-    Login,
     Signup,
     Legal,
     ProductView,
     Header,
+    UserMenu,
+    Login,
     Footer,
     Bidder,
     AppComponent,
@@ -58,7 +63,8 @@ import { UserService } from './app/services/user.service';
   providers: [                     // services
     BidsService,
     ProductsService,
-    UserService
+    UserService,
+    Authenticate
   ]
 })
 export class AppModule { }

@@ -1,11 +1,11 @@
 @import "../../../commons.scss";
 
-$header-height: 50px;
-
 .header {
   background-color: #fff;
   color: #000;
   height: $header-height;
+  position: static;
+  z-index: 3;
 
   a {
     color: inherit;
