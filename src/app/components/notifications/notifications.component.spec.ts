@@ -1,8 +1,6 @@
-/// <reference path="../../../../typings/index.d.ts"/>
-
 import { TestBed } from '@angular/core/testing';
 
-import { Notifications } from './notifications.component.ts';
+import { Notifications } from './notifications.component';
 
 // let fixture: any;
 let notif: any;

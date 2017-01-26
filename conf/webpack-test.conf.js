@@ -1,58 +1,60 @@
+const webpack = require('webpack');
+const conf = require('./gulp.conf');
 module.exports = {
   module: {
-    preLoaders: [
-      {
-        test: /\.ts$/,
-        exclude: /node_modules/,
-        loader: 'tslint'
-      }
-    ],
-
     loaders: [
       {
         test: /.json$/,
         loaders: [
-          'json'
+          'json-loader'
         ]
+      },
+      {
+        test: /.ts$/,
+        exclude: /node_modules/,
+        loader: 'tslint-loader',
+        enforce: 'pre'
       },
       {
         test: /\.ts$/,
         exclude: /node_modules/,
         loaders: [
-          'ts'
+          'ts-loader'
         ]
       },
       {
         test: /.html$/,
         loaders: [
-          'html'
-        ]
-      },
-      {
-      // we need to ignore style @imports in unit tests
-        test: /.scss$/,
-        loaders: [
-          'ignore-loader'
+          'html-loader'
         ]
       }
     ]
   },
-  plugins: [],
-  debug: true,
-  devtool: 'cheap-module-eval-source-map',
+  plugins: [
+    new webpack.ContextReplacementPlugin(
+      /angular(\\|\/)core(\\|\/)(esm(\\|\/)src|src)(\\|\/)linker/,
+      conf.paths.src
+    ),
+    new webpack.LoaderOptionsPlugin({
+      options: {
+        resolve: {},
+        ts: {
+          configFileName: 'tsconfig.json'
+        },
+        tslint: {
+          configuration: require('../tslint.json')
+        }
+      },
+      debug: true
+    })
+  ],
+  devtool: 'source-map',
   resolve: {
     extensions: [
-      '',
       '.webpack.js',
       '.web.js',
       '.js',
       '.ts'
     ]
-  },
-  ts: {
-    configFileName: 'conf/ts.conf.json'
-  },
-  tslint: {
-    configuration: require('../tslint.json')
   }
 };

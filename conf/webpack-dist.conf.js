@@ -3,8 +3,8 @@ const conf = require('./gulp.conf');
 const path = require('path');
 
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-const SplitByPathPlugin = require('webpack-split-by-path');
-const ExtractTextPlugin = require("extract-text-webpack-plugin");
+const FailPlugin = require('webpack-fail-plugin');
+const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const autoprefixer = require('autoprefixer');
 
 module.exports = {
@@ -13,24 +13,33 @@ module.exports = {
       {
         test: /.json$/,
         loaders: [
-          'json'
+          'json-loader'
         ]
       },
       {
+        test: /.ts$/,
+        exclude: /node_modules/,
+        loader: 'tslint-loader',
+        enforce: 'pre'
+      },
+      {
         test: /\.(css|scss)$/,
-        loaders: ExtractTextPlugin.extract('style', 'css?minimize!sass', 'postcss')
+        loaders: ExtractTextPlugin.extract({
+          fallbackLoader: 'style-loader',
+          loader: 'css-loader?minimize!sass-loader!postcss-loader'
+        })
       },
       {
         test: /\.ts$/,
         exclude: /node_modules/,
         loaders: [
-          'ts'
+          'ts-loader'
         ]
       },
       {
         test: /.html$/,
         loaders: [
-          'html'
+          'html-loader'
         ]
       }
     ]
@@ -38,43 +47,46 @@ module.exports = {
   plugins: [
     new webpack.optimize.OccurrenceOrderPlugin(),
     new webpack.NoErrorsPlugin(),
+    FailPlugin,
     new HtmlWebpackPlugin({
-      template: conf.path.src('index.html'),
-      inject: true
+      template: conf.path.src('index.html')
     }),
+    new webpack.ContextReplacementPlugin(
+      /angular(\\|\/)core(\\|\/)(esm(\\|\/)src|src)(\\|\/)linker/,
+      conf.paths.src
+    ),
     new webpack.DefinePlugin({
       'process.env.NODE_ENV': '"production"'
     }),
     new webpack.optimize.UglifyJsPlugin({
-      compress: {unused: true, dead_code: true} // eslint-disable-line camelcase
+      compress: {unused: true, dead_code: true, warnings: false} // eslint-disable-line camelcase
     }),
-    new SplitByPathPlugin([{
-      name: 'vendor',
-      path: path.join(__dirname, '../node_modules')
-    }]),
-    new ExtractTextPlugin('/index-[contenthash].css')
+    new ExtractTextPlugin('index-[contenthash].css'),
+    new webpack.optimize.CommonsChunkPlugin({name: 'vendor'}),
+    new webpack.LoaderOptionsPlugin({
+      options: {
+        postcss: () => [autoprefixer],
+        resolve: {},
+        ts: {
+          configFileName: 'tsconfig.json'
+        },
+        tslint: {
+          configuration: require('../tslint.json')
+        }
+      }
+    })
   ],
-  postcss: () => [autoprefixer],
   output: {
     path: path.join(process.cwd(), conf.paths.dist),
     filename: '[name]-[hash].js'
   },
   resolve: {
     extensions: [
-      '',
       '.webpack.js',
       '.web.js',
       '.js',
       '.ts'
     ]
   },
-  entry: {
-    app: `./${conf.path.src('index')}`
-  },
-  ts: {
-    configFileName: 'conf/ts.conf.json'
-  },
-  tslint: {
-    configuration: require('../tslint.json')
-  }
+  entry: `./${conf.path.src('index')}`
 };

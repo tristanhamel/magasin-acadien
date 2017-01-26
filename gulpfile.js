@@ -1,7 +1,8 @@
+'use strict';
+
 const gulp = require('gulp');
 const HubRegistry = require('gulp-hub');
 const livereload = require('gulp-livereload');
-// const browserSync = require('browser-sync');
 
 const conf = require('./conf/gulp.conf');
 
@@ -18,17 +19,6 @@ gulp.task('serve', gulp.series('webpack:watch', 'watch', 'nodemon', 'watch'));
 gulp.task('serve:dist', gulp.series('default', 'nodemon:dist'));
 gulp.task('default', gulp.series('clean', 'build'));
 gulp.task('watch', watch);
-
-// function reloadBrowserSync(cb) {
-//   // browserSync.reload();
-//   livereload.reload();
-//   cb();
-// }
-//
-// function watch(done) {
-//   gulp.watch(conf.path.src('app/**/*.html'), reloadBrowserSync);
-//   done();
-// }
 
 gulp.task('watch', watch);
 

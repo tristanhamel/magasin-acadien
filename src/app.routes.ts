@@ -1,5 +1,3 @@
-/// <reference path="../typings/index.d.ts"/>
-
 import { Routes, RouterModule } from '@angular/router';
 
 // views

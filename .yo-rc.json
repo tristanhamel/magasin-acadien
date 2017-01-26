@@ -1,21 +1,20 @@
 {
   "generator-fountain-angular2": {
-    "version": "0.6.0",
+    "version": "1.0.0-rc2",
     "props": {
-      "framework": "angular2",
-      "modules": "webpack",
-      "js": "typescript",
       "css": "scss",
+      "modules": "webpack",
+      "framework": "angular2",
+      "js": "typescript",
       "resolved": "/Users/tristan/npm/lib/node_modules/generator-fountain-webapp/node_modules/generator-fountain-angular2/generators/app/index.js",
       "namespace": "fountain-angular2",
+      "ci": [],
       "argv": {
         "remain": [],
         "cooked": [],
         "original": []
       },
-      "skip-cache": false,
-      "skip-install": false,
-      "sample": "techs",
+      "sample": "hello",
       "router": "router"
     }
   }

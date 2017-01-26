@@ -3,45 +3,44 @@ const conf = require('./gulp.conf');
 const path = require('path');
 
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const FailPlugin = require('webpack-fail-plugin');
 const autoprefixer = require('autoprefixer');
 
 module.exports = {
   module: {
-    preLoaders: [
-      {
-        test: /\.ts$/,
-        exclude: /node_modules/,
-        loader: 'tslint'
-      }
-    ],
-
     loaders: [
       {
         test: /.json$/,
         loaders: [
-          'json'
+          'json-loader'
         ]
+      },
+      {
+        test: /.ts$/,
+        exclude: /node_modules/,
+        loader: 'tslint-loader',
+        enforce: 'pre'
       },
       {
         test: /\.(css|scss)$/,
         loaders: [
-          'style',
-          'css',
-          'sass',
-          'postcss'
+          'style-loader',
+          'css-loader',
+          'sass-loader',
+          'postcss-loader'
         ]
       },
       {
         test: /\.ts$/,
         exclude: /node_modules/,
         loaders: [
-          'ts'
+          'ts-loader'
         ]
       },
       {
         test: /.html$/,
         loaders: [
-          'html'
+          'html-loader'
         ]
       }
     ]
@@ -49,32 +48,40 @@ module.exports = {
   plugins: [
     new webpack.optimize.OccurrenceOrderPlugin(),
     new webpack.NoErrorsPlugin(),
+    FailPlugin,
     new HtmlWebpackPlugin({
-      template: conf.path.src('index.html'),
-      inject: true
+      template: conf.path.src('index.html')
+    }),
+    new webpack.ContextReplacementPlugin(
+      /angular(\\|\/)core(\\|\/)(esm(\\|\/)src|src)(\\|\/)linker/,
+      conf.paths.src
+    ),
+    new webpack.LoaderOptionsPlugin({
+      options: {
+        postcss: () => [autoprefixer],
+        resolve: {},
+        ts: {
+          configFileName: 'tsconfig.json'
+        },
+        tslint: {
+          configuration: require('../tslint.json')
+        }
+      },
+      debug: true
     })
   ],
-  postcss: () => [autoprefixer],
-  debug: true,
-  devtool: 'cheap-module-eval-source-map',
+  devtool: 'source-map',
   output: {
     path: path.join(process.cwd(), conf.paths.tmp),
     filename: 'index.js'
   },
   resolve: {
     extensions: [
-      '',
       '.webpack.js',
       '.web.js',
       '.js',
       '.ts'
     ]
   },
-  entry: `./${conf.path.src('index')}`,
-  ts: {
-    configFileName: 'conf/ts.conf.json'
-  },
-  tslint: {
-    configuration: require('../tslint.json')
-  }
+  entry: `./${conf.path.src('index')}`
 };

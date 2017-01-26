@@ -1,19 +1,21 @@
-/// <reference path="../typings/index.d.ts"/>
-
-import 'es6-shim';
-import 'reflect-metadata';
+import 'core-js/client/shim';
 import 'zone.js/dist/zone';
 
-import {enableProdMode} from '@angular/core';
+import '@angular/common';
+import 'rxjs';
 
 import './index.scss';
+
+import {enableProdMode} from '@angular/core';
+import {platformBrowserDynamic} from '@angular/platform-browser-dynamic';
+import {AppModule} from './app.module';
 
 declare var process: any;
 if (process.env.NODE_ENV === 'production') {
   enableProdMode();
+} else {
+  Error['stackTraceLimit'] = Infinity; // tslint:disable-line:no-string-literal
+  require('zone.js/dist/long-stack-trace-zone'); // tslint:disable-line:no-var-requires
 }
-
-import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
-import { AppModule } from './app.module';
 
 platformBrowserDynamic().bootstrapModule(AppModule);

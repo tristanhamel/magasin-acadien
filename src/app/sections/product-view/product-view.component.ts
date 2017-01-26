@@ -14,6 +14,6 @@ export class ProductView {
   constructor(private route: ActivatedRoute) {
     route.params.subscribe(params => { this.product_id = params['product_id']; });
 
-    // TODO: bind to products service to grab the product with id product_id
+    //TODO: bind to products service to grab the product with id product_id
   }
 }
