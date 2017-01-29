@@ -1,0 +1,11 @@
+/* ng2 form classes */
+
+input.ng-dirty.ng-invalid, input:-webkit-autofill.ng-dirty.ng-invalid {
+  background: rgba(red, .1);
+  border: 1px solid rgba(red, .5);
+}
+
+input.ng-valid, input:-webkit-autofill.ng-valid {
+  background: rgba(green, .1);
+  border: 1px solid rgba(green, .5);
+}

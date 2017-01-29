@@ -11,18 +11,17 @@
        [ngClass]="{visible: show}">
     <ul *ngIf="!currentUser">
       <li>
-        <a (click)="toggleLogin()">
-          Log in
-        </a>
-        <login *ngIf="showLogin"
-               (onLogin)="onLogin($event)"></login>
+        <h2>
+          <a routerLink="/signup">
+            Sign up
+          </a>
+        </h2>
       </li>
       <li>
-        <a (click)="toggleSignup()">
-          Sign up
-        </a>
-        <signup *ngIf="showSignup">
-        </signup>
+        <h2>
+          Log in
+        </h2>
+        <login (onLogin)="onLogin($event)"></login>
       </li>
     </ul>
     <ul *ngIf="currentUser">

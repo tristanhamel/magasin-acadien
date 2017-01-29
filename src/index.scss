@@ -1,4 +1,6 @@
-@import "./commons.scss";
+@import
+  "./commons",
+  "./forms";
 
 html, body, #root {
   margin: 0;
@@ -50,5 +52,11 @@ button {
 
   &:focus {
     outline: none;
+  }
+
+  &:disabled {
+    background: #eee;
+    color: #aaa;
+    border-color: #eee;
   }
 }

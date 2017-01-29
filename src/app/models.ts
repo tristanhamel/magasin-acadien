@@ -12,6 +12,18 @@ export class User {
   }
 }
 
+export class NewUser {
+  name: string;
+  email: string;
+  password: string;
+
+  constructor (obj?: any) {
+    this.name       = obj &&  obj.name;
+    this.email      = obj &&  obj.email;
+    this.password   = obj &&  obj.password;
+  }
+}
+
 export class Bid {
   user: User;
   value: number;
@@ -19,10 +31,10 @@ export class Bid {
   message: string;
 
   constructor (obj?: any) {
-    this.user    =  obj &&  obj.user     || null;
-    this.value   =  obj &&  obj.value    || null;
-    this.time    =  obj &&  obj.time     || new Date();
-    this.message =  obj &&  obj.message  || null;
+      this.user    =  obj &&  obj.user     || null;
+      this.value   =  obj &&  obj.value    || null;
+      this.time    =  obj &&  obj.time     || new Date();
+      this.message =  obj &&  obj.message  || null;
   }
 }
 
@@ -33,7 +45,7 @@ export class Product {
   currentPrice: number;
   deadline: Date;
   description: string;
-  images: string;
+  images: string[];
   name: string;
   owner: User;
   startPrice: number;
@@ -46,7 +58,7 @@ export class Product {
     this.currentPrice = obj && obj.currentPrice || 0;
     this.deadline =     obj && obj.deadline     || null;
     this.description =  obj && obj.description  || null;
-    this.images =       obj && obj.images       || null;
+    this.images =       obj && obj.images       || [];
     this.name =         obj && obj.name         || null;
     this.owner =        obj && obj.owner        || null;
     this.startPrice =   obj && obj.startPrice   || 0;

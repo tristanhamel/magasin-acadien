@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, NavigationStart } from '@angular/router';
 
 import './user-menu.scss';
 
@@ -7,15 +7,13 @@ import { User } from '../../models';
 import { UserService, Authenticate } from '../../services/services';
 
 @Component({
-    selector: 'user-menu',
-    template: require('./user-menu.html')
+  selector: 'user-menu',
+  template: require('./user-menu.html')
 })
 
 export class UserMenu implements OnInit {
   currentUser: User;
   show: boolean;
-  showSignup: boolean;
-  showLogin: boolean;
 
   constructor(
     private userService: UserService,
@@ -23,7 +21,12 @@ export class UserMenu implements OnInit {
     private router: Router
   ) {
     this.show = false;
-    this.showSignup = false;
+
+    this.router.events.subscribe( event => {
+      if (event instanceof NavigationStart) {
+        this.show = false;
+      }
+    });
   }
 
   ngOnInit(): void {
@@ -47,16 +50,6 @@ export class UserMenu implements OnInit {
 
   toggleMenu(): void {
     this.show = !this.show;
-  }
-
-  toggleLogin(): void {
-    this.showSignup = false;
-    this.showLogin = !this.showLogin;
-  }
-
-  toggleSignup(): void {
-    this.showLogin = false;
-    this.showSignup = !this.showSignup;
   }
 
   onLogin($event: boolean): void {

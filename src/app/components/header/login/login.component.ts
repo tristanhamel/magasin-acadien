@@ -24,8 +24,9 @@ import './login.scss';
            name="password"
            [(ngModel)]="model.password"
            required>
-    <input type="submit" 
-           value="Submit">
+    <button type="submit">
+      Submit
+    </button>
   </form>
 </div>
 `

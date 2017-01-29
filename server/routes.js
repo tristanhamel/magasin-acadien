@@ -7,8 +7,8 @@
 const express = require('express');
 
 module.exports = function (app) {
-  app.use('/products', require('./api/product'));
-  app.use('/users', require('./api/user'));
+  app.use('/api/products', require('./api/product'));
+  app.use('/api/users', require('./api/user'));
   app.use('/auth', require('./auth'));
 
   // serve static files otherwise

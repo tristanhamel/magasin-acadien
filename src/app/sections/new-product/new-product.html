@@ -1,0 +1,56 @@
+<div class="new-product">
+  <div class="new-product-container">
+    <h1>
+      New product
+    </h1>
+    <form (ngSubmit)="onSubmit"
+          #productForm="ngForm">
+      <label for="title">
+        Title
+      </label>
+      <input id="title"
+             name="title"
+             type="text"
+             [(ngModel)]="model.name"
+             placeholder="Title"
+             required="true">
+      <label for="price">
+        Starting price
+      </label>
+      <input id="price"
+             name="price"
+             type="number"
+             [(ngModel)]="model.startPrice"
+             placeholder="price"
+             required="true">
+      <label for="deadline">
+        Deadline
+      </label>
+      <input id="deadline"
+             name="deadline"
+             type="datetime-local"
+             [(ngModel)]="model.deadline"
+             placeholder="deadline"
+             required="true">
+      <textarea id="description"
+                name="description"
+                cols="30"
+                rows="10"
+                [(ngModel)]="model.description"
+                placeholder="description"
+                required="true">
+      </textarea>
+      <label for="image">
+        Images
+      </label>
+      <input id="image"
+             name="image"
+             type="file"
+             [(ngModel)]="model.images"
+             placeholder="deadline">
+      <button type="submit">
+        Save new product
+      </button>
+    </form>
+  </div>
+</div>

@@ -4,11 +4,12 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 
 // views
-import {Landing} from './app/sections/landing/landing.component';
-import {Auctions} from './app/sections/auctions/auctions.component';
-import {Signup} from './app/components/header/signup/signup.component';
-import {Legal} from './app/sections/legal/legal.component';
-import {ProductView} from './app/sections/product-view/product-view.component';
+import { Landing } from './app/sections/landing/landing.component';
+import { Auctions } from './app/sections/auctions/auctions.component';
+import { Signup } from './app/sections/signup/signup.component';
+import { Legal } from './app/sections/legal/legal.component';
+import { ProductView } from './app/sections/product-view/product-view.component';
+import { NewProduct } from './app/sections/new-product/new-product.component';
 
 // global components
 import { Header } from './app/components/header/header.component';
@@ -22,6 +23,7 @@ import { ProductComponent } from './app/components/product/product.component';
 import { ProductsComponent } from './app/components/products/products.component';
 import { ProductCounter } from './app/components/product-counter/product-counter.component';
 import { TimeCounter } from './app/components/time-counter/time-counter.component';
+import { Spinner } from './app/components/spinner/spinner.component';
 
 import { routing } from './app.routes';
 
@@ -47,6 +49,7 @@ import {
     Signup,
     Legal,
     ProductView,
+    NewProduct,
     Header,
     UserMenu,
     Login,
@@ -57,6 +60,7 @@ import {
     ProductComponent,
     ProductsComponent,
     ProductCounter,
+    Spinner,
     TimeCounter
    ],
   bootstrap: [ AppComponent ],     // root component

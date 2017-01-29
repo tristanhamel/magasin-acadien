@@ -12,8 +12,8 @@ export class ProductView {
   product_id: string;
 
   constructor(private route: ActivatedRoute) {
-    route.params.subscribe(params => { this.product_id = params['product_id']; });
+    route.params.subscribe(params => { this.product_id = params['product_id']; }); // tslint:disable-line:no-string-literal
 
-    //TODO: bind to products service to grab the product with id product_id
+    // TODO: bind to products service to grab the product with id product_id
   }
 }

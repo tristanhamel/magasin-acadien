@@ -1,12 +1,12 @@
 'use strict';
 
-var User = require('./user.model');
-var passport = require('passport');
-var config = require('../../config/environment');
-var jwt = require('jsonwebtoken');
-var auth = require('../../auth/auth.service');
+const User = require('./user.model');
+// const passport = require('passport');
+// const config = require('../../config/environment');
+// const jwt = require('jsonwebtoken');
+const auth = require('../../auth/auth.service');
 
-var validationError = function(res, err) {
+const validationError = (res, err) => {
   return res.status(422).json(err);
 };
 
@@ -15,8 +15,8 @@ var validationError = function(res, err) {
  * restriction: 'admin'
  */
 exports.index = function(req, res) {
-  User.find({}, '-salt -hashedPassword', function (err, users) {
-    if(err) {
+  User.find({}, '-salt -hashedPassword', (err, users) => {
+    if (err) {
       return res.status(500).send(err);
     }
     res.status(200).json(users);
@@ -27,15 +27,15 @@ exports.index = function(req, res) {
  * Creates a new user
  */
 exports.create = function (req, res, next) {
-  var newUser = new User(req.body);
+  const newUser = new User(req.body);
   newUser.provider = 'local';
   newUser.role = 'member';
-  newUser.save(function(err, user) {
+  newUser.save( (err, user) => {
     if (err) {
       return validationError(res, err);
     }
-    var token = auth.signToken(user._id, user.name, user.email, user.role);
-    res.json({ token: token });
+    const token = auth.signToken(user._id, user.name, user.email, user.role);
+    res.json({token});
   });
 };
 
@@ -43,11 +43,15 @@ exports.create = function (req, res, next) {
  * Get a single user
  */
 exports.show = function (req, res, next) {
-  var userId = req.params.id;
+  const userId = req.params.id;
 
-  User.findById(userId, function (err, user) {
-    if (err) return next(err);
-    if (!user) return res.status(401).send('Unauthorized');
+  User.findById(userId, (err, user) => {
+    if (err) {
+      return next(err);
+    }
+    if (!user) {
+      return res.status(401).send('Unauthorized');
+    }
     res.json(user.profile);
   });
 };
@@ -56,9 +60,11 @@ exports.show = function (req, res, next) {
  * Deletes a user
  * restriction: 'admin'
  */
-exports.destroy = function(req, res) {
-  User.findByIdAndRemove(req.params.id, function(err, user) {
-    if(err) return res.status(500).send(err);
+exports.destroy = (req, res) => {
+  User.findByIdAndRemove(req.params.id, (err, user) => {
+    if (err) {
+      return res.status(500).send(err);
+    }
     return res.status(204).send('No Content');
   });
 };
@@ -66,16 +72,18 @@ exports.destroy = function(req, res) {
 /**
  * Change a users password
  */
-exports.changePassword = function(req, res, next) {
-  var userId = req.user._id;
-  var oldPass = String(req.body.oldPassword);
-  var newPass = String(req.body.newPassword);
+exports.changePassword = (req, res, next) => {
+  const userId = req.user._id;
+  const oldPass = String(req.body.oldPassword);
+  const newPass = String(req.body.newPassword);
 
-  User.findById(userId, function (err, user) {
-    if(user.authenticate(oldPass)) {
+  User.findById(userId, (err, user) => {
+    if (user.authenticate(oldPass)) {
       user.password = newPass;
-      user.save(function(err) {
-        if (err) return validationError(res, err);
+      user.save( err => {
+        if (err) {
+          return validationError(res, err);
+        }
         res.status(200).send('success');
       });
     } else {
@@ -88,12 +96,16 @@ exports.changePassword = function(req, res, next) {
  * Get my info
  */
 exports.me = function(req, res, next) {
-  var userId = req.user._id;
+  const userId = req.user._id;
   User.findOne({
     _id: userId
-  }, '-salt -hashedPassword', function(err, user) { // don't ever give out the password or salt
-    if (err) return next(err);
-    if (!user) return res.status(401).send('Unauthorized');
+  }, '-salt -hashedPassword', (err, user) => { // don't ever give out the password or salt
+    if (err) {
+      return next(err);
+    }
+    if (!user) {
+      return res.status(401).send('Unauthorized');
+    }
     res.json(user);
   });
 };

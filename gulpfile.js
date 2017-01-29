@@ -15,7 +15,7 @@ gulp.registry(hub);
 gulp.task('build', gulp.series(gulp.parallel('other', 'webpack:dist')));
 gulp.task('test', gulp.series('karma:single-run'));
 gulp.task('test:auto', gulp.series('karma:auto-run'));
-gulp.task('serve', gulp.series('webpack:watch', 'watch', 'nodemon', 'watch'));
+gulp.task('serve', gulp.series('webpack:watch', 'nodemon', 'watch'));
 gulp.task('serve:dist', gulp.series('default', 'nodemon:dist'));
 gulp.task('default', gulp.series('clean', 'build'));
 gulp.task('watch', watch);
@@ -30,7 +30,7 @@ function reload(done) {
 function watch(done) {
   livereload.listen();
 
-  gulp.watch(conf.path.tmp('app.js'), reload);
+  gulp.watch(conf.path.tmp('index.js'), reload);
   done();
 
   // // if the generated css file has changed, pass it to the browser without hard reloading

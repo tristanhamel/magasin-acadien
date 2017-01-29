@@ -1,0 +1,56 @@
+<div class="signup">
+  <div class="signup-container">
+    <h1>
+      Signup
+    </h1>
+    <form (ngSubmit)="onSubmit()"
+          #signupForm="ngForm" >
+      <label for="signupName">
+        Name or pseudo:
+      </label>
+      <input id="signupName"
+             type="text"
+             name="name"
+             placeholder="Name or pseudo"
+             [(ngModel)]="model.name"
+             required="true"
+             autocomplete="off"
+             [disabled]="submitted">
+      <label for="signupEmail">
+        Email:
+      </label>
+      <input id="signupEmail"
+             type="email"
+             name="email"
+             placeholder="email"
+             [(ngModel)]="model.email"
+             required="true"
+             autocomplete="off"
+             [disabled]="submitted">
+      <label for="signupPassword">
+        Password or pass phrase:
+      </label>
+      <input id="signupPassword"
+             type="password"
+             name="password"
+             placeholder="password or pass phrase"
+             [(ngModel)]="model.password"
+             required="true"
+             minlength="8"
+             autocomplete="off"
+             [disabled]="submitted">
+      <button type="submit"
+              [disabled]="!signupForm.form.valid || submitted">
+        Submit
+      </button>
+    </form>
+    <spinner *ngIf="submitted"></spinner>
+    <div class="errors" *ngIf="showErrors">
+      TODO: display errors from backend when needed
+    </div>
+    <div class="success" *ngIf="success">
+      <p>Congratulations! You are now registered and ready to make great deals!</p>
+      <p><a routerLink="">Check it out now!</a></p>
+    </div>
+  </div>
+</div>

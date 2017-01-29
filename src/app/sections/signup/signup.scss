@@ -1,0 +1,25 @@
+@import "../../../commons";
+
+.signup {
+
+  .signup-container {
+    margin: 0 auto;
+    max-width: 20rem;
+    width: 100%;
+
+    @include breakpoint('phablet') {
+      width: 20rem;
+    }
+  }
+
+  label, input, button {
+    display: block;
+    font-size: $font-size-big;
+    width: 100%;
+  }
+
+  input {
+    margin: 0.5rem 0 2rem 0;
+  }
+
+}

@@ -1,8 +1,12 @@
 .login {
-  padding: 1rem;
+  margin-right: 3rem;
 
   label {
     display: block;
     margin-top: 0.5rem;
+  }
+
+  input, button {
+    width: 100%;
   }
 }

@@ -1,4 +1,5 @@
-import {Component} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
+import {Authenticate} from './app/services/authenticate.service';
 
 @Component({
   selector: 'Root',
@@ -12,5 +13,12 @@ import {Component} from '@angular/core';
 </div>`
 })
 
-export class AppComponent {
+export class AppComponent implements OnInit{
+  constructor(private authenticate: Authenticate) {
+
+  }
+
+  ngOnInit(): void {
+    this.authenticate.checkLocalStorage();
+  }
 }

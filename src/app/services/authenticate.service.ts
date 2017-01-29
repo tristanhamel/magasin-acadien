@@ -6,7 +6,7 @@ import 'rxjs/add/operator/map';
 import { JwtHelper } from 'angular2-jwt';
 
 import { Urls } from './urls';
-import { User } from '../models';
+import {User, NewUser} from '../models';
 import { UserService } from './user.service';
 
 @Injectable()
@@ -17,11 +17,7 @@ export class Authenticate {
   private currentUser: User;
   private jwtHelper: JwtHelper = new JwtHelper();
 
-  constructor(private http: Http, private userService: UserService) {
-    // set token if saved in local storage
-    const currentUser = JSON.parse(localStorage.getItem('currentUser'));
-    this.token = currentUser && currentUser.token;
-  }
+  constructor(private http: Http, private userService: UserService) {}
 
   login (email: string, password: string): Observable<boolean> {
     const body = {
@@ -51,12 +47,14 @@ export class Authenticate {
     this.token = null;
     this.userService.setCurrentUser(null);
     localStorage.removeItem('currentUser');
+    localStorage.removeItem('token');
   }
 
-  signup(userObject: User) {
+  signup(newUser: NewUser): Observable<boolean> {
 
-    return this.http.post(Urls.USER, userObject)
+    return this.http.post(Urls.USER, newUser)
       .map( (response: Response) => {
+        console.log(response);
         const token = response.json().token;
 
         if (token) {
@@ -80,12 +78,21 @@ export class Authenticate {
     });
   }
 
+  // checks if there is a token in the local storage and logs user in if so
+  checkLocalStorage(): void {
+    const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+
+    if (currentUser) {
+      this.userService.setCurrentUser(currentUser);
+    }
+  };
+
   private setUser(token: string): void {
     this.token = token;
 
     const payload = this.jwtHelper.decodeToken(token);
 
-    this.currentUser = {
+    const currentUser = {
       _id: payload._id,
       email: payload.email,
       name: payload.name,
@@ -93,11 +100,10 @@ export class Authenticate {
     };
 
     // set user
-    this.userService.setCurrentUser(this.currentUser);
-
-    const stored = Object.assign({}, this.currentUser, {token: token});
+    this.userService.setCurrentUser(currentUser);
 
     // store username and jwt token in local storage to keep user logged in between page refreshes
-    localStorage.setItem('currentUser', JSON.stringify(stored));
+    localStorage.setItem('currentUser', JSON.stringify(currentUser));
+    localStorage.setItem('token', JSON.stringify(token));
   }
 }
