@@ -1,7 +1,11 @@
 import { NgModule }      from '@angular/core';
+import { Http, RequestOptions } from '@angular/http';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
+import { AuthHttp, AuthConfig } from 'angular2-jwt';
+import { Ng2CloudinaryModule } from 'ng2-cloudinary';
+import { FileUploadModule } from 'ng2-file-upload';
 
 // views
 import { Landing } from './app/sections/landing/landing.component';
@@ -12,20 +16,16 @@ import { ProductView } from './app/sections/product-view/product-view.component'
 import { NewProduct } from './app/sections/new-product/new-product.component';
 
 // global components
-import { Header } from './app/components/header/header.component';
-import { UserMenu } from './app/components/header/user-menu.component';
-import { Login } from './app/components/header/login/login.component';
-import { Footer } from './app/components/footer/footer.component';
+import { Header, UserMenu, Login, Footer, Notifications, Bidder, ProductComponent, ProductsComponent, ProductCounter, ProductImage, TimeCounter, Spinner} from './app/components/components';
 import { AppComponent }  from './app.component';
-import { Notifications } from './app/components/notifications/notifications.component';
-import { Bidder } from './app/components/bidder/bidder.component';
-import { ProductComponent } from './app/components/product/product.component';
-import { ProductsComponent } from './app/components/products/products.component';
-import { ProductCounter } from './app/components/product-counter/product-counter.component';
-import { TimeCounter } from './app/components/time-counter/time-counter.component';
-import { Spinner } from './app/components/spinner/spinner.component';
 
 import { routing } from './app.routes';
+
+// fonts
+import './fonts/fontello-23b9cdcf/css/fontello.css';
+
+// styles
+import './app-components.scss';
 
 // global services
 import {
@@ -35,13 +35,23 @@ import {
   Authenticate
 } from './app/services/services';
 
+// custom auth factory to attach token to authenticated requests
+export function authHttpServiceFactory(http: Http, options: RequestOptions) {
+  return new AuthHttp(new AuthConfig({
+    tokenName: 'token',
+    tokenGetter: (() => localStorage.getItem('token'))
+  }), http, options);
+}
+
 @NgModule({
   imports: [                       // module dependencies
     BrowserModule,
     FormsModule,
     ReactiveFormsModule,
     HttpModule,
-    routing
+    routing,
+    Ng2CloudinaryModule,
+    FileUploadModule
   ],
   declarations: [                  // components and directives
     Landing,
@@ -60,15 +70,21 @@ import {
     ProductComponent,
     ProductsComponent,
     ProductCounter,
+    ProductImage,
     Spinner,
     TimeCounter
    ],
   bootstrap: [ AppComponent ],     // root component
   providers: [                     // services
+    {
+      provide: AuthHttp,
+      useFactory: authHttpServiceFactory,
+      deps: [Http, RequestOptions]
+    },
     BidsService,
     ProductsService,
     UserService,
-    Authenticate
+    Authenticate,
   ]
 })
 export class AppModule { }

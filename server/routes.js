@@ -11,9 +11,7 @@ module.exports = function (app) {
   app.use('/api/users', require('./api/user'));
   app.use('/auth', require('./auth'));
 
-  // serve static files otherwise
-  // const publicDir = process.env.NODE_ENV === 'development' ? '.temp' : 'dist';
-  const publicDir = getCliArg();
+  const publicDir = getCliArg() || '.tmp';
 
   if (Array.isArray(publicDir)) {
     publicDir.forEach(dir =>

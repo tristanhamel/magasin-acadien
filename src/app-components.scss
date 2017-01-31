@@ -1,0 +1,8 @@
+/* app wide class definitions */
+
+.button-row {
+  display: flex;
+  flex-wrap: nowrap;
+  justify-content: space-around;
+  width: 100%;
+}

@@ -31,6 +31,12 @@
         </a>
       </li>
       <li>
+        <a *ngIf="currentUser.role === 'admin'"
+           routerLink="/new-product">
+          Add new product
+        </a>
+      </li>
+      <li>
         <a (click)="logout()">
           Logout
         </a>

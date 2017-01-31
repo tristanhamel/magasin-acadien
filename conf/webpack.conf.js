@@ -31,6 +31,10 @@ module.exports = {
         ]
       },
       {
+        test: /\.(png|woff|woff2|eot|ttf|svg)(\?v=\d+\.\d+\.\d+)?$/,
+        loader: 'url-loader?limit=100000'
+      },
+      {
         test: /\.ts$/,
         exclude: /node_modules/,
         loaders: [

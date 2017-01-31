@@ -1,13 +1,11 @@
 'use strict';
 
-var mongoose = require('mongoose');
-var passport = require('passport');
-var config = require('../config/environment');
-var jwt = require('jsonwebtoken');
-var expressJwt = require('express-jwt');
-var compose = require('composable-middleware');
-var User = require('../api/user/user.model');
-var validateJwt = expressJwt({ secret: config.secrets.session });
+const config = require('../config/environment');
+const jwt = require('jsonwebtoken');
+const expressJwt = require('express-jwt');
+const compose = require('composable-middleware');
+const User = require('../api/user/user.model');
+const validateJwt = expressJwt({secret: config.secrets.session});
 
 /**
  * Attaches the user object to the request if authenticated
@@ -16,18 +14,22 @@ var validateJwt = expressJwt({ secret: config.secrets.session });
 function isAuthenticated() {
   return compose()
     // Validate jwt
-    .use(function(req, res, next) {
+    .use((req, res, next) => {
       // allow access_token to be passed through query parameter as well
-      if(req.query && req.query.hasOwnProperty('access_token')) {
-        req.headers.authorization = 'Bearer ' + req.query.access_token;
+      if (req.query && req.query.hasOwnProperty('access_token')) {
+        req.headers.authorization = `Bearer ${req.query.access_token}`;
       }
       validateJwt(req, res, next);
     })
     // Attach user to request
-    .use(function(req, res, next) {
-      User.findById(req.user._id, function (err, user) {
-        if (err) return next(err);
-        if (!user) return res.status(401).send('Unauthorized');
+    .use((req, res, next) => {
+      User.findById(req.user._id, (err, user) => {
+        if (err) {
+          return next(err);
+        }
+        if (!user) {
+          return res.status(401).send('Unauthorized');
+        }
 
         req.user = user;
         next();
@@ -39,15 +41,16 @@ function isAuthenticated() {
  * Checks if the user role meets the minimum requirements of the route
  */
 function hasRole(roleRequired) {
-  if (!roleRequired) throw new Error('Required role needs to be set');
+  if (!roleRequired) {
+    throw new Error('Required role needs to be set');
+  }
 
   return compose()
     .use(isAuthenticated())
-    .use(function meetsRequirements(req, res, next) {
+    .use((req, res, next) => {
       if (config.userRoles.indexOf(req.user.role) >= config.userRoles.indexOf(roleRequired)) {
         next();
-      }
-      else {
+      } else {
         res.status(403).send('Forbidden');
       }
     });
@@ -56,21 +59,51 @@ function hasRole(roleRequired) {
 /**
  * Returns a jwt token signed by the app secret
  */
-function signToken(id, name, email, role) {
-  return jwt.sign({ _id: id, name: name, email: email, role: role}, config.secrets.session, { expiresIn: 60 * 60 * 5 });
+function signToken(id, name, email, role, type) {
+  let expire;
+  if (type === 'refresh') {
+    // ≈ 1 year
+    expire = 12 * 30 * 60 * 60 * 24;
+  } else {
+    // 5 mins
+    expire = 60 * 5;
+  }
+
+  const identity = {_id: id, name, email, role};
+  return jwt.sign({identity, type}, config.secrets.session, {expiresIn: expire});
 }
 
 /**
- * Set token cookie directly for oAuth strategies
+ * Checks if token is valid or expired
  */
-function setTokenCookie(req, res) {
-  if (!req.user) return res.status(404).json({ message: 'Something went wrong, please try again.'});
-  var token = signToken(req.user._id, req.user.name, req.user.email, req.user.role);
-  res.cookie('token', JSON.stringify(token));
-  res.redirect('/');
+function canRefreshToken() {
+  return compose()
+  // Validate jwt
+    .use((req, res, next) => {
+      // allow renew_token to be passed through body as well
+      if (req.body && req.body.hasOwnProperty('refresh_token')) {
+        req.headers.authorization = `Bearer ${req.body.refresh_token}`;
+      }
+      validateJwt(req, res, next);
+    })
+    // Attach user to request
+    .use((req, res, next) => {
+      User.findById(req.user._id, (err, user) => {
+        if (err) {
+          console.log(err);
+          return next(err);
+        }
+        if (!user) {
+          return res.status(401).send('Unauthorized');
+        }
+
+        req.user = user;
+        next();
+      });
+    });
 }
 
 exports.isAuthenticated = isAuthenticated;
 exports.hasRole = hasRole;
 exports.signToken = signToken;
-exports.setTokenCookie = setTokenCookie;
+exports.canRefreshToken = canRefreshToken;

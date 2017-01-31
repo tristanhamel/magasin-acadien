@@ -1,12 +1,12 @@
-import {Injectable} from '@angular/core';
-import {Http, Response} from '@angular/http';
+import { Injectable } from '@angular/core';
+import { Http, Response, Headers, RequestOptions } from '@angular/http';
 
 import { Observable } from 'rxjs';
 import 'rxjs/add/operator/map';
 import { JwtHelper } from 'angular2-jwt';
 
 import { Urls } from './urls';
-import {User, NewUser} from '../models';
+import { User, NewUser } from '../models';
 import { UserService } from './user.service';
 
 @Injectable()
@@ -24,8 +24,6 @@ export class Authenticate {
       email: email,
       password: password
     };
-
-    console.log(Urls.AUTH);
 
     return this.http.post(Urls.AUTH, body)
       .map((response: Response) => {
@@ -48,6 +46,25 @@ export class Authenticate {
     this.userService.setCurrentUser(null);
     localStorage.removeItem('currentUser');
     localStorage.removeItem('token');
+  }
+
+  // get a new authentication token
+  renew() {
+    let headers = new Headers();
+    headers.append('Content-Type', 'application/json');
+    let authToken = localStorage.getItem('token');
+    headers.append('Authorization', `Bearer ${authToken}`);
+    const options = new RequestOptions({headers});
+
+    const url: string = `${Urls.USER}/renew`;
+    this.http.get(url, options)
+      .map( response => {
+        const token = response.json().token;
+
+        if (token) {
+          this.setUser(token);
+        }
+      });
   }
 
   signup(newUser: NewUser): Observable<boolean> {

@@ -1,56 +1,112 @@
 <div class="new-product">
-  <div class="new-product-container">
-    <h1>
-      New product
-    </h1>
-    <form (ngSubmit)="onSubmit"
-          #productForm="ngForm">
-      <label for="title">
-        Title
-      </label>
-      <input id="title"
-             name="title"
-             type="text"
-             [(ngModel)]="model.name"
-             placeholder="Title"
-             required="true">
-      <label for="price">
-        Starting price
-      </label>
-      <input id="price"
-             name="price"
-             type="number"
-             [(ngModel)]="model.startPrice"
-             placeholder="price"
-             required="true">
-      <label for="deadline">
-        Deadline
-      </label>
-      <input id="deadline"
-             name="deadline"
-             type="datetime-local"
-             [(ngModel)]="model.deadline"
-             placeholder="deadline"
-             required="true">
-      <textarea id="description"
-                name="description"
-                cols="30"
-                rows="10"
-                [(ngModel)]="model.description"
-                placeholder="description"
-                required="true">
-      </textarea>
-      <label for="image">
+
+  <h1>
+    {{model.name || 'New product'}}
+  </h1>
+
+  <!--<div class="success-message"-->
+       <!--*ngIf="!showForms">-->
+    <!--Congratulations! Your new product was successfully added.-->
+    <!--<div class="button-row">-->
+      <!--<button [routerLink]="['/product', productId]">-->
+        <!--See product-->
+      <!--</button>-->
+      <!--<button (click)="restart()">-->
+        <!--Add new product-->
+      <!--</button>-->
+    <!--</div>-->
+
+  <!--</div>-->
+
+  <div class="new-product-container"
+       *ngIf="showForms">
+
+    <div class="form-section details">
+      <form #productForm="ngForm">
+        <label for="title">
+          Title
+        </label>
+        <input id="title"
+               name="title"
+               type="text"
+               [(ngModel)]="model.name"
+               placeholder="Title"
+               required="true">
+        <label for="price">
+          Starting price
+        </label>
+        <input id="price"
+               name="price"
+               type="number"
+               [(ngModel)]="model.startPrice"
+               placeholder="price"
+               min="0.1"
+               required="true">
+        <label for="deadline">
+          Deadline
+        </label>
+        <input id="deadline"
+               name="deadline"
+               type="datetime-local"
+               [(ngModel)]="model.deadline"
+               placeholder="deadline"
+               required="true">
+        <textarea id="description"
+                  name="description"
+                  cols="30"
+                  rows="10"
+                  [(ngModel)]="model.description"
+                  placeholder="description"
+                  required="true">
+        </textarea>
+      </form>
+    </div>
+
+    <div class="form-section images">
+      <label>
         Images
       </label>
-      <input id="image"
-             name="image"
-             type="file"
-             [(ngModel)]="model.images"
-             placeholder="deadline">
-      <button type="submit">
-        Save new product
-      </button>
-    </form>
+      <form>
+        <button class="choose-file-btn">
+          Choose file
+          <input type="file"
+                 [uploader]="uploader"
+                 multiple
+                 ng2FileSelect
+                 accept="image/*;capture=camera">
+        </button>
+        <ul class="selected-files">
+          <li *ngFor="let file of uploader.queue">
+            <i class="icon-trash"
+               *ngIf="!file.isUploading && !file.isUploaded "
+               (click)="removeFromQueue(file)"></i>
+            <i class="icon-spin"
+               *ngIf="file.isUploading"></i>
+            <span>{{file.file.name}}</span>
+          </li>
+        </ul>
+        <button (click)="uploadImages()"
+                [disabled]="!uploader.queue.length">
+          <i class="icon-upload-cloud-outline"></i>
+          <span>Add new images</span>
+        </button>
+      </form>
+      <div>
+        <div class="selected-images"
+             *ngFor="let image of model.images">
+          <product-image [imageId]="image" [height]="100" [width]="100"></product-image>
+        </div>
+      </div>
+    </div>
+
+    <div class="form-section submit">
+      <div class="submit-container">
+        <!--<button (click)="onSubmit()"-->
+                <!--[disabled]="!productForm.form.valid || !model.images.length">-->
+        <button (click)="onSubmit()">
+          Save new product
+        </button>
+      </div>
+    </div>
   </div>
 </div>

@@ -2,10 +2,9 @@
 
 const express = require('express');
 const controller = require('./user.controller');
-// const config = require('../../config/environment');
 const auth = require('../../auth/auth.service');
 
-const router = express.Router();
+const router = express.Router(); // eslint-disable-line babel/new-cap
 
 router.get('/', auth.hasRole('admin'), controller.index);
 router.delete('/:id', auth.hasRole('admin'), controller.destroy);

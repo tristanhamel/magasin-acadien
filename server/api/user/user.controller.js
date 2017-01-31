@@ -1,9 +1,6 @@
 'use strict';
 
 const User = require('./user.model');
-// const passport = require('passport');
-// const config = require('../../config/environment');
-// const jwt = require('jsonwebtoken');
 const auth = require('../../auth/auth.service');
 
 const validationError = (res, err) => {
@@ -14,7 +11,7 @@ const validationError = (res, err) => {
  * Get list of users
  * restriction: 'admin'
  */
-exports.index = function(req, res) {
+exports.index = function (req, res) {
   User.find({}, '-salt -hashedPassword', (err, users) => {
     if (err) {
       return res.status(500).send(err);
@@ -26,11 +23,11 @@ exports.index = function(req, res) {
 /**
  * Creates a new user
  */
-exports.create = function (req, res, next) {
+exports.create = function (req, res) {
   const newUser = new User(req.body);
   newUser.provider = 'local';
   newUser.role = 'member';
-  newUser.save( (err, user) => {
+  newUser.save((err, user) => {
     if (err) {
       return validationError(res, err);
     }
@@ -61,7 +58,7 @@ exports.show = function (req, res, next) {
  * restriction: 'admin'
  */
 exports.destroy = (req, res) => {
-  User.findByIdAndRemove(req.params.id, (err, user) => {
+  User.findByIdAndRemove(req.params.id, err => {
     if (err) {
       return res.status(500).send(err);
     }
@@ -72,7 +69,7 @@ exports.destroy = (req, res) => {
 /**
  * Change a users password
  */
-exports.changePassword = (req, res, next) => {
+exports.changePassword = (req, res) => {
   const userId = req.user._id;
   const oldPass = String(req.body.oldPassword);
   const newPass = String(req.body.newPassword);
@@ -80,7 +77,7 @@ exports.changePassword = (req, res, next) => {
   User.findById(userId, (err, user) => {
     if (user.authenticate(oldPass)) {
       user.password = newPass;
-      user.save( err => {
+      user.save(err => {
         if (err) {
           return validationError(res, err);
         }
@@ -95,7 +92,7 @@ exports.changePassword = (req, res, next) => {
 /**
  * Get my info
  */
-exports.me = function(req, res, next) {
+exports.me = function (req, res, next) {
   const userId = req.user._id;
   User.findOne({
     _id: userId
@@ -113,6 +110,6 @@ exports.me = function(req, res, next) {
 /**
  * Authentication callback
  */
-exports.authCallback = function(req, res, next) {
+exports.authCallback = function (req, res) {
   res.redirect('/');
 };
