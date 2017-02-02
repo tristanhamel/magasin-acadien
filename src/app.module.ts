@@ -31,7 +31,6 @@ import './app-components.scss';
 import {
   BidsService,
   ProductsService,
-  UserService,
   Authenticate
 } from './app/services/services';
 
@@ -83,7 +82,6 @@ export function authHttpServiceFactory(http: Http, options: RequestOptions) {
     },
     BidsService,
     ProductsService,
-    UserService,
     Authenticate,
   ]
 })

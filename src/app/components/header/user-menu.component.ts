@@ -4,7 +4,7 @@ import { Router, NavigationStart } from '@angular/router';
 import './user-menu.scss';
 
 import { User } from '../../models';
-import { UserService, Authenticate } from '../../services/services';
+import { Authenticate } from '../../services/services';
 
 @Component({
   selector: 'user-menu',
@@ -16,8 +16,7 @@ export class UserMenu implements OnInit {
   show: boolean;
 
   constructor(
-    private userService: UserService,
-    private authenticate: Authenticate,
+    private userService: Authenticate,
     private router: Router
   ) {
     this.show = false;
@@ -39,7 +38,7 @@ export class UserMenu implements OnInit {
   }
 
   logout(): void {
-    this.authenticate.logout();
+    this.userService.logout();
     this.router.navigate([''])
       .then( (response: boolean) => {
         if (response) {

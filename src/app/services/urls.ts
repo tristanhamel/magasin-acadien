@@ -1,6 +1,5 @@
 export const Urls = {
-  RENEW: '/auth/renew',
-  AUTH: '/auth/local',
+  AUTH: '/auth',
   USER: '/api/users',
   PRODUCT: '/api/products'
 };

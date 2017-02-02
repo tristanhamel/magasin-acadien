@@ -5,7 +5,6 @@ const jwt = require('jsonwebtoken');
 const expressJwt = require('express-jwt');
 const compose = require('composable-middleware');
 const User = require('../api/user/user.model');
-const validateJwt = expressJwt({secret: config.secrets.session});
 
 /**
  * Attaches the user object to the request if authenticated
@@ -13,17 +12,18 @@ const validateJwt = expressJwt({secret: config.secrets.session});
  */
 function isAuthenticated() {
   return compose()
-    // Validate jwt
-    .use((req, res, next) => {
-      // allow access_token to be passed through query parameter as well
-      if (req.query && req.query.hasOwnProperty('access_token')) {
-        req.headers.authorization = `Bearer ${req.query.access_token}`;
-      }
-      validateJwt(req, res, next);
-    })
+    .use(
+      expressJwt({
+        getToken: req => {
+          return req.headers.authorization.split(' ')[1];
+        },
+        secret: config.secrets.session
+      })
+      // validateJwt(req, res, next);
+    )
     // Attach user to request
     .use((req, res, next) => {
-      User.findById(req.user._id, (err, user) => {
+      User.findById(req.user.identity._id, (err, user) => {
         if (err) {
           return next(err);
         }
@@ -73,37 +73,6 @@ function signToken(id, name, email, role, type) {
   return jwt.sign({identity, type}, config.secrets.session, {expiresIn: expire});
 }
 
-/**
- * Checks if token is valid or expired
- */
-function canRefreshToken() {
-  return compose()
-  // Validate jwt
-    .use((req, res, next) => {
-      // allow renew_token to be passed through body as well
-      if (req.body && req.body.hasOwnProperty('refresh_token')) {
-        req.headers.authorization = `Bearer ${req.body.refresh_token}`;
-      }
-      validateJwt(req, res, next);
-    })
-    // Attach user to request
-    .use((req, res, next) => {
-      User.findById(req.user._id, (err, user) => {
-        if (err) {
-          console.log(err);
-          return next(err);
-        }
-        if (!user) {
-          return res.status(401).send('Unauthorized');
-        }
-
-        req.user = user;
-        next();
-      });
-    });
-}
-
 exports.isAuthenticated = isAuthenticated;
 exports.hasRole = hasRole;
 exports.signToken = signToken;
-exports.canRefreshToken = canRefreshToken;

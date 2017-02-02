@@ -1,11 +1,11 @@
-import {Injectable} from '@angular/core';
-import {Http, Response, Headers, RequestOptions} from '@angular/http';
-import {Observable} from 'rxjs/Observable';
-import { AuthHttp } from 'angular2-jwt';
+import { Injectable } from '@angular/core';
+import { Http, Response, Headers, RequestOptions } from '@angular/http';
+import { Observable } from 'rxjs/Observable';
 
 import { Urls } from './urls';
-import {Product} from '../models';
+import { Product } from '../models';
 import { BidsService } from './bids.service';
+import { Authenticate } from './authenticate.service';
 
 @Injectable()
 export class ProductsService {
@@ -15,9 +15,16 @@ export class ProductsService {
   // getProducts observable always returns the store.
   products: Product[] = [];
 
-  constructor(private http: Http,  private authHttp: AuthHttp, private bidsService: BidsService) {}
+  // used to authenticate backend calls
+  access_token: string;
 
-  // The http call should eventually be moved to its own service.
+  constructor(private http: Http,  private authenticate: Authenticate, private bidsService: BidsService) {
+    this.authenticate.access_token.subscribe(
+      token => this.access_token = token
+    );
+  }
+
+  // TODO: The http call should eventually be moved to its own service.
   // This service should only concern itself with aggregating streams
 
   getProducts (): Observable<Product[]> {

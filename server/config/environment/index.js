@@ -19,7 +19,7 @@ const all = {
   root: path.normalize(`${__dirname}/../../..`),
 
   // Server port
-  port: process.env.PORT || 9000,
+  port: process.env.PORT || 3000,
 
   // Server IP
   ip: process.env.IP || '0.0.0.0',
@@ -27,7 +27,6 @@ const all = {
   // Should we populate the DB with sample data?
   seedDB: false,
 
-  // Secret for session, you will want to change this and make it an environment variable
   secrets: {
     session: process.env.SESSION_SECRET
   },

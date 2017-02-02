@@ -19,6 +19,6 @@ export class AppComponent implements OnInit{
   }
 
   ngOnInit(): void {
-    this.authenticate.checkLocalStorage();
+    this.authenticate.refresh();
   }
 }

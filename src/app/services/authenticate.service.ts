@@ -1,23 +1,27 @@
 import { Injectable } from '@angular/core';
 import { Http, Response, Headers, RequestOptions } from '@angular/http';
 
-import { Observable } from 'rxjs';
-import 'rxjs/add/operator/map';
+import { Observable, Subject, BehaviorSubject } from 'rxjs';
 import { JwtHelper } from 'angular2-jwt';
 
 import { Urls } from './urls';
 import { User, NewUser } from '../models';
-import { UserService } from './user.service';
 
 @Injectable()
 
 // should be refactored to make a backend request for authentication
 export class Authenticate {
-  public token: string;
-  private currentUser: User;
+  currentUser: Subject<User> = new BehaviorSubject<User>(null);
+  access_token: Subject<string> = new BehaviorSubject<string>(null);
+
   private jwtHelper: JwtHelper = new JwtHelper();
 
-  constructor(private http: Http, private userService: UserService) {}
+  constructor(private http: Http) {
+    // any time refresh returns, the access_token is updated
+    this.refresh().subscribe(
+      access_token => this.access_token.next(access_token)
+    );
+  }
 
   login (email: string, password: string): Observable<boolean> {
     const body = {
@@ -25,45 +29,52 @@ export class Authenticate {
       password: password
     };
 
-    return this.http.post(Urls.AUTH, body)
+    return this.http.post(`${Urls.AUTH}/login`, body)
       .map((response: Response) => {
-        const token = response.json().token;
+        const refresh_token = response.json().refresh_token;
+        const access_token = response.json().access_token;
 
-        if (token) {
-          this.setUser(token);
-          // return true to indicate successful login
-          return true;
-        } else {
-          // return false to indicate failed login
-          return false;
-        }
+        this.setUser(refresh_token);
+
+        this.access_token.next(access_token);
+        this.tokenTimeout();
+
+        // return true to indicate successful login
+        return true;
       });
-
   }
 
   logout() {
-    this.token = null;
-    this.userService.setCurrentUser(null);
+    this.currentUser.next(null);
     localStorage.removeItem('currentUser');
-    localStorage.removeItem('token');
+    localStorage.removeItem('redresh_token');
+    localStorage.removeItem('access_token');
+  }
+
+  tokenTimeout() {
+    setTimeout(
+      () => {
+        this.refresh();
+      },
+      4.5 * 60 * 1000 // 4.5 mins
+    );
   }
 
   // get a new authentication token
-  renew() {
+  refresh(): Observable<string> {
     let headers = new Headers();
     headers.append('Content-Type', 'application/json');
-    let authToken = localStorage.getItem('token');
-    headers.append('Authorization', `Bearer ${authToken}`);
+    let refresh_token = localStorage.getItem('refresh_token');
+    headers.append('Authorization', `Bearer ${refresh_token}`);
     const options = new RequestOptions({headers});
 
-    const url: string = `${Urls.USER}/renew`;
-    this.http.get(url, options)
-      .map( response => {
-        const token = response.json().token;
+    const url: string = `${Urls.AUTH}/refresh`;
 
-        if (token) {
-          this.setUser(token);
-        }
+    return this.http.get(url, options)
+      .map( (response: Response) => {
+        const access_token = response.json().access_token;
+        this.tokenTimeout();
+        return access_token;
       });
   }
 
@@ -85,31 +96,21 @@ export class Authenticate {
       });
   }
 
-  changePassword(newPassword: string): Observable<boolean> {
-    const id = this.currentUser._id;
-    const url: string = `${Urls.USER}/${id}/${newPassword}`;
+  // changePassword(newPassword: string): Observable<boolean> {
+  //   const id = this.currentUser._id;
+  //   const url: string = `${Urls.USER}/${id}/${newPassword}`;
+  //
+  //   return this.http.put(url, {})
+  //     .map( (response: Response) => {
+  //       return response.ok;
+  //   });
+  // }
 
-    return this.http.put(url, {})
-      .map( (response: Response) => {
-        return response.ok;
-    });
-  }
+  private setUser(refresh_token: string): void {
 
-  // checks if there is a token in the local storage and logs user in if so
-  checkLocalStorage(): void {
-    const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+    const payload = this.jwtHelper.decodeToken(refresh_token);
 
-    if (currentUser) {
-      this.userService.setCurrentUser(currentUser);
-    }
-  };
-
-  private setUser(token: string): void {
-    this.token = token;
-
-    const payload = this.jwtHelper.decodeToken(token);
-
-    const currentUser = {
+    const user = {
       _id: payload._id,
       email: payload.email,
       name: payload.name,
@@ -117,10 +118,13 @@ export class Authenticate {
     };
 
     // set user
-    this.userService.setCurrentUser(currentUser);
+    this.currentUser.next(user);
 
-    // store username and jwt token in local storage to keep user logged in between page refreshes
-    localStorage.setItem('currentUser', JSON.stringify(currentUser));
-    localStorage.setItem('token', JSON.stringify(token));
+    // store username and jwt tokens in local storage to keep user logged between page refreshes
+    localStorage.setItem('currentUser', JSON.stringify(user));
+
+    if (refresh_token) {
+      localStorage.setItem('refresh_token', JSON.stringify(refresh_token));
+    }
   }
 }

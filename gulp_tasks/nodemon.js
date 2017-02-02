@@ -22,7 +22,7 @@ function server(cb, target, nodeEnv) {
     MONGOLAB_URI: 'mongodb://magasin_master:lavieestbelle@ds145405.mlab.com:45405/magasin',
   };
 
-  if(nodeEnv) {
+  if (nodeEnv) {
     environmentVariables.NODE_ENV = nodeEnv;
   }
 

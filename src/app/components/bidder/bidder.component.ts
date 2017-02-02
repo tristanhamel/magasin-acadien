@@ -1,7 +1,7 @@
-import {Component, OnChanges, OnInit, Input, Output, EventEmitter} from '@angular/core';
+import { Component, OnChanges, OnInit, Input, Output, EventEmitter } from '@angular/core';
 
-import {Bid, Product, User} from '../../models';
-import {UserService} from '../../services/user.service';
+import { Bid, Product, User } from '../../models';
+import { Authenticate } from '../../services/authenticate.service';
 
 import './bidder.scss';
 
@@ -22,7 +22,7 @@ export class Bidder implements OnChanges, OnInit {
   @Input() product: Product;
   @Output() onBidding: EventEmitter<any> = new EventEmitter();
 
-  constructor(private userService: UserService) {}
+  constructor(private userService: Authenticate) {}
 
   ngOnInit() {
     this.userService.currentUser
