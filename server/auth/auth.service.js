@@ -19,7 +19,6 @@ function isAuthenticated() {
         },
         secret: config.secrets.session
       })
-      // validateJwt(req, res, next);
     )
     // Attach user to request
     .use((req, res, next) => {

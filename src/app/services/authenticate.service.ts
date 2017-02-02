@@ -17,10 +17,15 @@ export class Authenticate {
   private jwtHelper: JwtHelper = new JwtHelper();
 
   constructor(private http: Http) {
-    // any time refresh returns, the access_token is updated
-    this.refresh().subscribe(
-      access_token => this.access_token.next(access_token)
-    );
+
+    // if we got a user stored, set it now
+    if (localStorage.getItem('currentUser')) {
+      this.currentUser.next(JSON.parse(localStorage.getItem('currentUser')));
+      // any time refresh returns, the access_token is updated
+      this.refresh().subscribe(
+        access_token => this.access_token.next(access_token)
+      );
+    }
   }
 
   login (email: string, password: string): Observable<boolean> {
@@ -124,7 +129,7 @@ export class Authenticate {
     localStorage.setItem('currentUser', JSON.stringify(user));
 
     if (refresh_token) {
-      localStorage.setItem('refresh_token', JSON.stringify(refresh_token));
+      localStorage.setItem('refresh_token', refresh_token);
     }
   }
 }
